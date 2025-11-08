@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
+import { AuthContext } from "../Context/AuthContext";
 
 const Navbar = () => {
-  const [user, setuser] = useState();
+  const { user } = use(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const navLinks = [

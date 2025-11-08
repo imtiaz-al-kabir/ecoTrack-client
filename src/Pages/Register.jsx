@@ -1,12 +1,30 @@
+import { use } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../Context/AuthContext";
 
 const Register = () => {
+  const { createUser } = use(AuthContext);
+  const handleRegisterForm = (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const photo = e.target.photo.value;
+    const password = e.target.password.value;
+    console.log(name, email, photo, password);
+    createUser(email, password)
+      .then((result) => console.log(result))
+      .catch((err) => console.log(err.message));
+  };
+
   return (
     <div>
       <div>
         <div className=" bg-[#f5f5f5] min-h-screen flex justify-center items-center">
           <div className="bg-white p-5 md:p-10 rounded-xl">
-            <form className="md:w-96 w-80 flex flex-col items-center justify-center">
+            <form
+              onSubmit={handleRegisterForm}
+              className="md:w-96 w-80 flex flex-col items-center justify-center"
+            >
               <h2 className="text-4xl text-gray-900 font-medium">
                 Join Eco<span className="text-emerald-400">Track </span>{" "}
               </h2>
