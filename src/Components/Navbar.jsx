@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
 
 const Navbar = () => {
-  const { user } = use(AuthContext);
+  const { user,logoutUser } = use(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const navLinks = [
@@ -17,7 +17,15 @@ const Navbar = () => {
           { name: "My Activities", path: "/my-activities" },
         ]
       : []),
+
+
   ];
+
+
+  const handleLogout=()=>{
+
+    logoutUser().then(()=>console.log("logout successfully")).catch(err=>console.log(err.message))
+  }
 
   return (
     <nav
@@ -73,7 +81,9 @@ const Navbar = () => {
                 <Link>Settings</Link>
               </li>
               <li>
-                <Link>Logout</Link>
+                <button 
+                onClick={handleLogout}
+                className="btn">Logout</button>
               </li>
             </ul>
           </div>
@@ -173,7 +183,9 @@ const Navbar = () => {
                 <Link>Settings</Link>
               </li>
               <li>
-                <Link>Logout</Link>
+                <button
+                onClick={handleLogout}
+                className="btn ">Logout</button>
               </li>
             </ul>
           </div>

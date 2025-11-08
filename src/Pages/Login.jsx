@@ -1,14 +1,27 @@
+import { use } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
+import { AuthContext } from "../Context/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { loginUser } = use(AuthContext);
+
+  const handleLoginForm = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    loginUser(email, password).then().catch();
+  };
 
   return (
     <div>
       <div className=" bg-[#f5f5f5] min-h-screen flex justify-center items-center">
         <div className="bg-white p-5 md:p-10 rounded-xl">
-          <form className="md:w-96 w-80 flex flex-col items-center justify-center">
+          <form
+            onSubmit={handleLoginForm}
+            className="md:w-96 w-80 flex flex-col items-center justify-center"
+          >
             <h2 className="text-4xl text-gray-900 font-medium">Sign in</h2>
 
             <p className="text-gray-500/90 text-md font-medium my-5">
