@@ -11,12 +11,18 @@ const Login = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    loginUser(email, password).then().catch();
+    loginUser(email, password)
+      .then(() => {
+        navigate(`${location.state ? location.state : "/"}`);
+      })
+      .catch();
   };
 
   const handleGoogle = () => {
     googleLogin()
-      .then((result) => console.log(result))
+      .then(() => {
+        navigate(`${location.state ? location.state : "/"}`);
+      })
       .catch((err) => console.log(err));
   };
   return (

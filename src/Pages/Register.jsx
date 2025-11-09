@@ -1,9 +1,11 @@
 import { use } from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
 
 const Register = () => {
   const { createUser, googleLogin } = use(AuthContext);
+  const navigate=useNavigate()
+  const location=useLocation()
   const handleRegisterForm = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
@@ -12,13 +14,17 @@ const Register = () => {
     const password = e.target.password.value;
     console.log(name, email, photo, password);
     createUser(email, password)
-      .then((result) => console.log(result))
+       .then(() => {
+        navigate(`${location.state ? location.state : "/"}`);
+      })
       .catch((err) => console.log(err.message));
   };
 
   const handleGoogle = () => {
     googleLogin()
-      .then((result) => console.log(result))
+      .then(() => {
+        navigate(`${location.state ? location.state : "/"}`);
+      })
       .catch((err) => console.log(err));
   };
 

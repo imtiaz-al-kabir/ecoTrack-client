@@ -11,6 +11,7 @@ const Navbar = () => {
     { name: "Challenges", path: "/challenges" },
     ...(user
       ? [
+        { name: "Add New Challenge", path: "/challenges/add" },
           { name: "Tips", path: "/tips" },
 
           { name: "Events", path: "/events" },

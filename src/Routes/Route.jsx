@@ -5,6 +5,7 @@ import ErrorPage from "../Pages/ErrorPage";
 import Home from "../Pages/Home";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
+import AddNewChallenge from "../Pages/AddNewChallenge";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "/challenges",
         Component: Challenges,
+      },
+      {
+        path: "/challenges/add",
+        Component: AddNewChallenge,
       },
       {
         path: "/login",

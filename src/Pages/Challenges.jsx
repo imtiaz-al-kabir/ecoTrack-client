@@ -1,11 +1,13 @@
-import React from 'react';
+import { ChallengeCard } from "../Components/ChallengeCard";
+import { ChallengeCardDetails } from "../Components/ChallengeCardDetails";
 
 const Challenges = () => {
-    return (
-        <div>
-            challenges
-        </div>
-    );
+  return (
+    <div>
+      <ChallengeCard />
+      <ChallengeCardDetails />
+    </div>
+  );
 };
 
 export default Challenges;
