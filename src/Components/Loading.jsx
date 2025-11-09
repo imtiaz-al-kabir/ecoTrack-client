@@ -28,7 +28,7 @@ const Loading = () => {
 
 const StyledWrapper = styled.div`
   .container {
-    width: 100%;
+    min-width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;

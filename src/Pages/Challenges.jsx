@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { ChallengeCard } from "../Components/ChallengeCard";
-import { ChallengeCardDetails } from "../Components/ChallengeCardDetails";
 import useAxiosInstance from "../Hook/useAxiosInstance";
 
 const Challenges = () => {
@@ -13,14 +12,11 @@ const Challenges = () => {
 
   return (
     <div className="container mx-auto py-10">
-
-        <div className="grid  grid-cols-4 gap-5">
-      {challenges.map((challenge) => (
-        <ChallengeCard key={challenge._id} challenge={challenge} />
-      ))}
-
-      <ChallengeCardDetails />
-    </div>
+      <div className="grid  grid-cols-4 gap-5">
+        {challenges.map((challenge) => (
+          <ChallengeCard key={challenge._id} challenge={challenge} />
+        ))}
+      </div>
     </div>
   );
 };
