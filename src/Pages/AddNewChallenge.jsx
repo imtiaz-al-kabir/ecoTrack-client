@@ -1,6 +1,9 @@
-import { useState, useEffect } from "react";
+import { use, useEffect, useState } from "react";
+import { AuthContext } from "../Context/AuthContext";
+import useAxiosSecure from "../Hook/useAxiosSecure";
 
 const AddNewChallenge = () => {
+  const { user } = use(AuthContext);
   const categories = [
     "Waste Reduction",
     "Energy Conservation",
@@ -8,6 +11,8 @@ const AddNewChallenge = () => {
     "Sustainable Transport",
     "Green Living",
   ];
+
+  const axiosSecure = useAxiosSecure();
 
   const [duration, setDuration] = useState(0);
   const [errors, setErrors] = useState({});
@@ -69,20 +74,9 @@ const AddNewChallenge = () => {
     console.log("✅ Sending to backend:", challengeData);
 
     try {
-      const res = await fetch("http://localhost:3000/challenges", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(challengeData),
-      });
-
-      if (res.ok) {
-        alert("✅ Challenge added successfully!");
-        form.reset();
-        setDuration(0);
-        setErrors({});
-      } else {
-        alert("❌ Failed to add challenge.");
-      }
+      axiosSecure
+        .post("/challenges", challengeData)
+        .then((data) => console.log(data.data));
     } catch (err) {
       console.error("Error:", err);
       alert("❌ Server error occurred.");
@@ -233,7 +227,9 @@ const AddNewChallenge = () => {
             </label>
             <input
               type="email"
+              defaultValue={user?.email}
               name="createdBy"
+              readOnly
               className={`mt-1 block w-full rounded-lg border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 ${
                 errors.createdBy ? "border-red-400" : "border-gray-200"
               }`}
