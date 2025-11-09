@@ -5,7 +5,7 @@ import { AuthContext } from "../Context/AuthContext";
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { loginUser } = use(AuthContext);
+  const { loginUser, googleLogin } = use(AuthContext);
 
   const handleLoginForm = (e) => {
     e.preventDefault();
@@ -14,6 +14,11 @@ const Login = () => {
     loginUser(email, password).then().catch();
   };
 
+  const handleGoogle = () => {
+    googleLogin()
+      .then((result) => console.log(result))
+      .catch((err) => console.log(err));
+  };
   return (
     <div>
       <div className=" bg-[#f5f5f5] min-h-screen flex justify-center items-center">
@@ -106,6 +111,7 @@ const Login = () => {
           </div>
 
           <button
+            onClick={handleGoogle}
             type="button"
             className="w-full btn mt-8 bg-gray-500/10 flex items-center justify-center h-12 rounded-xl"
           >

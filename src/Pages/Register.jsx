@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
 
 const Register = () => {
-  const { createUser } = use(AuthContext);
+  const { createUser, googleLogin } = use(AuthContext);
   const handleRegisterForm = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
@@ -14,6 +14,12 @@ const Register = () => {
     createUser(email, password)
       .then((result) => console.log(result))
       .catch((err) => console.log(err.message));
+  };
+
+  const handleGoogle = () => {
+    googleLogin()
+      .then((result) => console.log(result))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -143,8 +149,9 @@ const Register = () => {
             </div>
 
             <button
+              onClick={handleGoogle}
               type="button"
-              className="w-full mt-8 bg-gray-500/10 flex items-center justify-center h-12 rounded-xl"
+              className="w-full mt-8 bg-gray-500/10 flex items-center justify-center h-12 rounded-xl btn"
             >
               <img
                 src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/login/googleLogo.svg"

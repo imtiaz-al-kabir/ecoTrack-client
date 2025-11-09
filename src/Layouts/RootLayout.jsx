@@ -1,18 +1,18 @@
-import React from 'react';
-import Navbar from "../Components/Navbar";
 import { Outlet } from "react-router";
 import Footer from "../Components/Footer";
+import Navbar from "../Components/Navbar";
 
 const RootLayout = () => {
-    return (
-        <div>
-
-            <Navbar/>
-            <Outlet/>
-            <Footer/>
-            i am from root
-        </div>
-    );
+  return (
+    <div>
+      <Navbar />
+      <div className="min-h-screen -100px">
+        {" "}
+        <Outlet />
+      </div>
+      <Footer />
+    </div>
+  );
 };
 
 export default RootLayout;
