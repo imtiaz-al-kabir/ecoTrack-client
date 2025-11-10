@@ -111,6 +111,7 @@ const Navbar = () => {
           <NavLink
             key={i}
             to={link.path}
+            end={link.path === "/challenges"}
             className={({ isActive }) =>
               `text-lg font-medium hover:border-b-2 border-emerald-400 transition-all duration-500 ${
                 isActive ? " text-emerald-400" : "  "

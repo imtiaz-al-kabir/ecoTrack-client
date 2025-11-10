@@ -114,7 +114,7 @@ const ChallengeCardDetails = () => {
               {" "}
               <p>
                 <span className="font-semibold">Duration:</span>{" "}
-                {challenge.duration} days ={" "}
+                {challenge.duration} days{" "}
               </p>{" "}
               <p>
                 <span className="font-semibold">Target:</span>{" "}

@@ -76,7 +76,7 @@ const MyActivities = () => {
           return (
             <div
               key={jc._id}
-              className="p-4  rounded-lg shadow-sm flex flex-col md:flex-row md:items-center md:justify-between "
+              className="p-4  rounded-lg bg-green-200 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between "
             >
               <div className="mb-3 md:mb-0">
                 <p>
