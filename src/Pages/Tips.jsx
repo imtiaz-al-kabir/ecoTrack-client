@@ -11,7 +11,7 @@ const Tips = () => {
   }, [axiosInstance]);
 
   return (
-    <div className="flex flex-wrap justify-center">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 container mx-auto py-10">
       {tips.map((tip, index) => (
         <TipsCard key={index} tip={tip} />
       ))}

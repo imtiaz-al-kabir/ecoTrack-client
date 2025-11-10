@@ -1,3 +1,4 @@
+import { motion } from "motion/react";
 import { use, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Context/AuthContext";
@@ -5,6 +6,8 @@ import useAxiosSecure from "../Hook/useAxiosSecure";
 
 const AddNewChallenge = () => {
   const { user } = use(AuthContext);
+  const axiosSecure = useAxiosSecure();
+
   const categories = [
     "Waste Reduction",
     "Energy Conservation",
@@ -13,11 +16,8 @@ const AddNewChallenge = () => {
     "Green Living",
   ];
 
-  const axiosSecure = useAxiosSecure();
-
   const [duration, setDuration] = useState(0);
   const [errors, setErrors] = useState({});
-
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
@@ -73,33 +73,43 @@ const AddNewChallenge = () => {
     };
 
     try {
-      axiosSecure.post("/challenges", challengeData).then((data) => {
-        const result = data.data;
-        if (result) {
-          Swal.fire({
-            position: "top-center",
-            icon: "success",
-            title: "Challenge has been created",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      });
+      const res = await axiosSecure.post("/challenges", challengeData);
+      if (res.data) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Challenge has been created",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        form.reset();
+        setStartDate("");
+        setEndDate("");
+        setDuration(0);
+        setErrors({});
+      }
     } catch (err) {
       console.error("Error:", err);
-      alert("❌ Server error occurred.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Server error occurred!",
+      });
     }
   };
 
   return (
     <div className="container mx-auto pb-12 px-5">
-      <h2 className="text-2xl font-semibold text-center py-10 ">
+      <h2 className="text-3xl font-bold text-center py-10 text-emerald-600">
         Add New Challenge
       </h2>
 
-      <form
+      <motion.form
         onSubmit={handleSubmit}
-        className="max-w-3xl mx-auto bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-md space-y-6 "
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-3xl mx-auto bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg space-y-6"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Title */}
@@ -230,11 +240,7 @@ const AddNewChallenge = () => {
               className={`mt-1 block w-full rounded-lg border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 ${
                 errors.createdBy ? "border-red-400" : "border-gray-200"
               }`}
-              placeholder="admin@ecotrack.com"
             />
-            {errors.createdBy && (
-              <p className="text-xs text-red-600 mt-1">{errors.createdBy}</p>
-            )}
           </div>
 
           {/* Image */}
@@ -250,29 +256,28 @@ const AddNewChallenge = () => {
 
         {/* Buttons */}
         <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <button
-              type="submit"
-              className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 font-medium shadow-sm"
-            >
-              Create Challenge
-            </button>
+          <motion.button
+            type="submit"
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 font-medium shadow-sm"
+          >
+            Create Challenge
+          </motion.button>
 
-            <button
-              type="reset"
-              onClick={() => {
-                setStartDate("");
-                setEndDate("");
-                setDuration(0);
-                setErrors({});
-              }}
-              className="inline-flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm"
-            >
-              Reset
-            </button>
-          </div>
+          <button
+            type="reset"
+            onClick={() => {
+              setStartDate("");
+              setEndDate("");
+              setDuration(0);
+              setErrors({});
+            }}
+            className="inline-flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm"
+          >
+            Reset
+          </button>
         </div>
-      </form>
+      </motion.form>
     </div>
   );
 };

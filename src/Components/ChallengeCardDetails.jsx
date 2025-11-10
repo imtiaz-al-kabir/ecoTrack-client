@@ -1,3 +1,4 @@
+import { motion } from "motion/react";
 import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router";
@@ -36,6 +37,7 @@ const ChallengeCardDetails = () => {
     };
     fetchChallenge();
   }, [id, axiosInstance]);
+
   useEffect(() => {
     const checkJoined = async () => {
       if (!user?.email || !id) return;
@@ -45,7 +47,6 @@ const ChallengeCardDetails = () => {
           const joinedChallengeId = getChallengeIdString(jc.challengeId);
           return joinedChallengeId === id;
         });
-
         setJoined(hasJoined);
       } catch (err) {
         console.error("Error checking joined status:", err);
@@ -94,67 +95,69 @@ const ChallengeCardDetails = () => {
   if (loading || !challenge) return <Loading />;
 
   return (
-    <div className="py-10">
-      {" "}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="py-10"
+    >
       <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-        {" "}
         <div className="flex flex-col md:flex-row">
-          {" "}
-          <img
+          <motion.img
             src={challenge.photo}
             alt="Challenge"
             className="w-full md:w-1/2 object-cover"
-          />{" "}
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.3 }}
+          />
           <div className="p-6 flex-1 space-y-4">
-            {" "}
             <div>
-              {" "}
-              <h2 className="text-2xl font-bold">{challenge.title}</h2>{" "}
-              <p className="text-emerald-600 font-medium">
+              <h2 className="text-3xl font-bold text-emerald-600">
+                {challenge.title}
+              </h2>
+              <p className="text-lg text-emerald-500 font-medium">
                 {challenge.category}
-              </p>{" "}
-            </div>{" "}
+              </p>
+            </div>
             <p className="text-gray-700 leading-relaxed">
               {challenge.description}
-            </p>{" "}
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-gray-700">
-              {" "}
               <p>
                 <span className="font-semibold">Duration:</span>{" "}
-                {challenge.duration} days{" "}
-              </p>{" "}
+                {challenge.duration} days
+              </p>
               <p>
                 <span className="font-semibold">Target:</span>{" "}
-                {challenge.target}{" "}
-              </p>{" "}
+                {challenge.target}
+              </p>
               <p>
-                {" "}
-                <span className="font-semibold">Participants:</span>
-                {challenge.participants || 0}{" "}
-              </p>{" "}
+                <span className="font-semibold">Participants:</span>{" "}
+                {challenge.participants || 0}
+              </p>
               <p>
-                {" "}
                 <span className="font-semibold">Impact Metric:</span>{" "}
-                {challenge.impact}{" "}
+                {challenge.impact}
               </p>
             </div>
             <div className="pt-4">
-              <button
+              <motion.button
                 onClick={handleJoin}
                 disabled={joined}
+                whileTap={{ scale: joined ? 1 : 0.95 }}
                 className={`w-full md:w-auto rounded-lg text-white text-sm font-medium px-6 py-2 transition-colors ${
                   joined
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-emerald-500 hover:bg-emerald-600"
                 }`}
               >
-                {joined ? "Joined" : "Join Challenge"}{" "}
-              </button>{" "}
-            </div>{" "}
-          </div>{" "}
-        </div>{" "}
-      </div>{" "}
-    </div>
+                {joined ? "Joined" : "Join Challenge"}
+              </motion.button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
   );
 };
 

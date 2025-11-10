@@ -8,7 +8,7 @@ import WhyGoGreen from "../Components/WhyGoGreen";
 
 const Home = () => {
   return (
-    <div className="px-5">
+    <div className="px-5 md:px-0">
       <Hero />
       <Stats />
       <ActiveChallenges />

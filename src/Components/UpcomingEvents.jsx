@@ -1,9 +1,9 @@
+import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link } from "react-router";
 import EventsCard from "../Components/EventsCard";
 import useAxiosInstance from "../Hook/useAxiosInstance";
-
 const UpcomingEvents = () => {
   const axiosInstance = useAxiosInstance();
   const [events, setEvents] = useState([]);
@@ -22,15 +22,18 @@ const UpcomingEvents = () => {
       </div>
 
       <div className="text-center pt-5">
-        <Link
-          to="/events"
-          className="btn bg-green-500 hover:bg-green-600 rounded-lg text-white font-semibold"
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 300 }}
         >
-          View All Events{" "}
-          <span>
-            <FaArrowRightLong />
-          </span>{" "}
-        </Link>
+          <Link
+            to="/events"
+            className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 rounded-lg text-white font-semibold px-4 py-2"
+          >
+            View More Events
+            <FaArrowRightLong className="ml-1" />
+          </Link>
+        </motion.div>
       </div>
     </div>
   );

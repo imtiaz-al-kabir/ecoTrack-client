@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion } from "motion/react";
 import useAxiosInstance from "../Hook/useAxiosInstance";
 
 const UserChallenges = () => {
@@ -10,27 +11,33 @@ const UserChallenges = () => {
   }, [axiosInstance]);
 
   const statusColors = {
-    "Not Started": "text-gray-500",
-    Ongoing: "text-yellow-500",
-    Finished: "text-green-500",
+    "Not Started": "text-gray-600",
+    Ongoing: "text-yellow-600",
+    Finished: "text-green-600",
   };
 
   return (
-    <div className="container mx-auto py-10 space-y-4 px-5">
-      <h2 className="text-2xl font-bold">All Joined Challenges</h2>
-      <div className="grid grid-cols-1  nd:grid-cols-2 lg:grid-cols-3 gap-5">
+    <div className="container mx-auto py-10 px-5">
+      <h2 className="text-3xl font-bold mb-6 text-emerald-600">All Joined Challenges</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {joined.map((jc) => (
-          <div key={jc._id} className="p-4 g rounded-lg shadow-sm bg-green-200 ">
+          <motion.div
+            key={jc._id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="bg-linear-to-r from-green-100 to-green-200 rounded-xl p-5 shadow-md hover:shadow-xl transition-shadow"
+          >
             <p>
               <span className="font-semibold">User:</span> {jc.userId}
             </p>
             <p>
-              <span className="font-semibold">Challenge ID:</span>{" "}
-              {jc.challengeId}
+              <span className="font-semibold">Challenge ID:</span> {jc.challengeId}
             </p>
             <p>
               <span className="font-semibold">Status:</span>{" "}
-              <span className={statusColors[jc.status] || "text-gray-500"}>
+              <span className={statusColors[jc.status] || "text-gray-600"}>
                 {jc.status}
               </span>
             </p>
@@ -38,7 +45,7 @@ const UserChallenges = () => {
               <span className="font-semibold">Joined:</span>{" "}
               {new Date(jc.joinDate).toLocaleDateString()}
             </p>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

@@ -4,3 +4,9 @@
 }
 /* --prefersdark */
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+.slick-prev:before,
+.slick-next:before {
+  color: #ff0000;      /* arrow color /
+  font-size: 30px;     / arrow size */
+}

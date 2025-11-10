@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import Loading from "../Components/Loading";
 import { AuthContext } from "../Context/AuthContext";
@@ -61,29 +62,33 @@ const MyActivities = () => {
   };
 
   if (!user)
-    return <p className="p-4">Please log in to view your joined challenges.</p>;
+    return <p className="p-4 text-center text-gray-700">Please log in to view your joined challenges.</p>;
   if (loading) return <Loading />;
   if (!joined.length)
-    return <p className="p-4">You haven't joined any challenges yet.</p>;
+    return <p className="p-4 text-center text-gray-700">You haven't joined any challenges yet.</p>;
 
   return (
-    <div className="max-w-5xl mx-auto py-10 space-y-4 px-5">
-      <h2 className="text-2xl font-bold">My Joined Challenges</h2>
+    <div className="max-w-5xl mx-auto py-10 space-y-6 px-5">
+      <h2 className="text-3xl font-bold text-emerald-600 mb-6 text-center">My Joined Challenges</h2>
 
-      <div className="grid grid-cols-1  gap-4">
+      <div className="grid grid-cols-1 gap-4">
         {joined.map((jc) => {
           const challengeIdStr = getChallengeIdString(jc.challengeId);
           return (
-            <div
+            <motion.div
               key={jc._id}
-              className="p-4  rounded-lg bg-green-200 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between "
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              whileHover={{ scale: 1.02 }}
+              className="p-5 rounded-xl bg-gradient-to-r from-green-100 to-green-200 shadow-md flex flex-col md:flex-row md:items-center md:justify-between"
             >
               <div className="mb-3 md:mb-0">
-                <p>
+                <p className="text-gray-700">
                   <span className="font-semibold">Challenge ID:</span>{" "}
                   <span className="break-all">{challengeIdStr}</span>
                 </p>
-                <p>
+                <p className="text-gray-700">
                   <span className="font-semibold">Joined:</span>{" "}
                   {jc.joinDate
                     ? new Date(jc.joinDate).toLocaleDateString()
@@ -91,7 +96,7 @@ const MyActivities = () => {
                 </p>
               </div>
 
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-4">
                 <div>
                   <label className="block text-sm text-gray-700 font-semibold">
                     Status
@@ -101,7 +106,7 @@ const MyActivities = () => {
                     onChange={(e) =>
                       handleStatusChange(jc._id, jc, e.target.value)
                     }
-                    className="mt-1 block rounded-md border px-3 py-1"
+                    className="mt-1 block rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-400"
                   >
                     {STATUS_OPTIONS.map((s) => (
                       <option key={s} value={s}>
@@ -111,7 +116,7 @@ const MyActivities = () => {
                   </select>
                 </div>
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>

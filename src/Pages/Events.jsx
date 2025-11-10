@@ -11,7 +11,7 @@ const Events = () => {
   }, [axiosInstance]);
 
   return (
-    <div className="flex flex-wrap justify-center">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 container mx-auto py-10">
       {events.map((event, index) => (
         <EventsCard key={index} event={event} />
       ))}

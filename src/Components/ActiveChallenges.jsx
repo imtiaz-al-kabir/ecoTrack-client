@@ -3,7 +3,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { Link } from "react-router";
 import useAxiosInstance from "../Hook/useAxiosInstance";
 import { ChallengeCard } from "./ChallengeCard";
-
+import {motion} from "motion/react"
 const ActiveChallenges = () => {
   const axiosInstance = useAxiosInstance();
   const [challenges, setChallenges] = useState([]);
@@ -23,15 +23,15 @@ const ActiveChallenges = () => {
         ))}
       </div>
       <div className="text-center pt-5">
-        <Link
-          to="/challenges"
-          className="btn bg-green-500 hover:bg-green-600 rounded-lg text-white font-semibold"
-        >
-          View All Challenges{" "}
-          <span>
-            <FaArrowRightLong />
-          </span>{" "}
-        </Link>
+            <motion.div whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 300 }}>
+      <Link
+        to="/challenges"
+        className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 rounded-lg text-white font-semibold px-4 py-2"
+      >
+        View All Challenges
+        <FaArrowRightLong className="ml-1" />
+      </Link>
+    </motion.div>
       </div>
     </div>
   );

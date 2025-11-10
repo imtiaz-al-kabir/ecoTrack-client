@@ -1,4 +1,5 @@
-import { FaLightbulb, FaUsers, FaChartLine } from "react-icons/fa";
+import { motion } from "motion/react";
+import { FaChartLine, FaLightbulb, FaUsers } from "react-icons/fa";
 
 const HowItWorks = () => {
   const steps = [
@@ -20,18 +21,24 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className="py-16 bg-white text-center">
+    <section className="py-16 bg-linear-to-b from-white to-green-50 text-center">
       <h2 className="text-3xl font-bold text-gray-800 mb-10">How It Works</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
         {steps.map((step, index) => (
-          <div
+          <motion.div
             key={index}
-            className="p-6 bg-green-50 rounded-2xl shadow-sm hover:shadow-lg transition-transform duration-300 hover:-translate-y-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.2, duration: 0.5 }}
+            whileHover={{ scale: 1.05 }}
+            className="p-6 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-transform duration-300"
           >
             <div className="flex justify-center mb-4">{step.icon}</div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">{step.title}</h3>
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+              {step.title}
+            </h3>
             <p className="text-gray-600 text-sm">{step.desc}</p>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>
