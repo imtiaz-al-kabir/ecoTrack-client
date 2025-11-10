@@ -1,19 +1,9 @@
 import { Link } from "react-router";
 
 export function ChallengeCard({ challenge }) {
-  const {
-    category,
+  const { category, description, duration, participants, photo, title, _id } =
+    challenge;
 
-    description,
-    duration,
-
-    participants,
-    photo,
-
-    title,
-    _id,
-  } = challenge;
-  console.log(challenge);
   return (
     <div className="max-w-sm  bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
       <img src={photo} alt="image" className="w-full h-48 object-cover" />

@@ -1,105 +1,154 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useParams } from "react-router";
+import { AuthContext } from "../Context/AuthContext";
 import useAxiosInstance from "../Hook/useAxiosInstance";
 import Loading from "./Loading";
 
-export function ChallengeCardDetails() {
+const ChallengeCardDetails = () => {
   const { id } = useParams();
   const axiosInstance = useAxiosInstance();
-  const [challenge, setChallenge] = useState(null);
-  console.log(challenge);
+  const { user } = useContext(AuthContext);
 
-  //   useEffect(() => {
-  //     axiosInstance
-  //       .get(`challenges/${id}`)
-  //       .then((data) => console.log(data.data));
-  //   }, [id, axiosInstance]);
+  const [challenge, setChallenge] = useState(null);
+  const [joined, setJoined] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const getChallengeIdString = (challengeId) => {
+    if (typeof challengeId === "string") return challengeId;
+    if (challengeId?.$oid) return challengeId.$oid;
+    if (challengeId?._id) return challengeId._id.toString();
+    return challengeId?.toString();
+  };
 
   useEffect(() => {
     const fetchChallenge = async () => {
       try {
-        const res = await axiosInstance.get(`http://localhost:3000/challenges/${id}`);
-        // handle array or single object response
-        const data = Array.isArray(res.data) ? res.data[0] : res.data;
+        const { data } = await axiosInstance.get(`/challenges/${id}`);
         setChallenge(data);
       } catch (err) {
         console.error("Error fetching challenge:", err);
+        toast.error("Failed to load challenge");
+      } finally {
+        setLoading(false);
       }
     };
-
     fetchChallenge();
-  }, [id,axiosInstance]);
+  }, [id, axiosInstance]);
+  useEffect(() => {
+    const checkJoined = async () => {
+      if (!user?.email || !id) return;
+      try {
+        const res = await axiosInstance.get(`/userChallenges/${user.email}`);
+        const hasJoined = res.data.some((jc) => {
+          const joinedChallengeId = getChallengeIdString(jc.challengeId);
+          return joinedChallengeId === id;
+        });
 
-  if (!challenge) {
-    return <Loading />;
-  }
+        setJoined(hasJoined);
+      } catch (err) {
+        console.error("Error checking joined status:", err);
+      }
+    };
+    checkJoined();
+  }, [user, id, axiosInstance]);
+
+  const handleJoin = async () => {
+    if (!user?.email) return toast.error("Please log in to join a challenge.");
+    if (joined) return;
+
+    setJoined(true);
+
+    try {
+      const res = await axiosInstance.post("/userChallenges", {
+        userId: user.email,
+        challengeId: id,
+      });
+      if (res.data?.insertedId) {
+        toast.success("Joined challenge successfully!");
+
+        setChallenge((prevChallenge) => ({
+          ...prevChallenge,
+          participants: (prevChallenge.participants || 0) + 1,
+        }));
+      } else if (
+        res.status === 200 &&
+        res.data?.message?.includes("Already joined")
+      ) {
+        toast("You've already joined this challenge.", { icon: "ℹ️" });
+      }
+    } catch (err) {
+      console.error(err);
+      setJoined(false);
+      toast.error(err.response?.data?.message || "Failed to join challenge.");
+    }
+  };
+
+  if (loading || !challenge) return <Loading />;
+
   return (
-   <div className="py-10">
-     <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-      <div className="flex flex-col md:flex-row">
-        <img
-          src={challenge.photo}
-          alt="image"
-          className="w-full md:w-1/2  object-cover"
-        />
-        <div className="p-6 flex-1 space-y-4">
-          <div>
-            <h2 className="text-2xl font-bold text-gray-800">
-              {challenge.title}
-            </h2>
-            <p className="text-emerald-600 font-medium">
-              {challenge.category}
-            </p>
-          </div>
-          <p className="text-gray-700 leading-relaxed">
-            {challenge.description} 
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-gray-700">
-            <p>
-              <span className="font-semibold">Duration:</span>
-              {challenge.duration} days
-            </p>
-            <p>
-              <span className="font-semibold">Target:</span>
-              {challenge.target}
-            </p>
-            <p>
-              <span className="font-semibold">Participants:</span>
-              {challenge.participants}
-            </p>
-            <p>
-              <span className="font-semibold">Impact Metric: </span>
-              {challenge.impact}
-            </p>
-            <p>
-              <span className="font-semibold">Start Date:</span>
-              {challenge.startDate}
-            </p>
-            <p>
-              <span className="font-semibold">End Date:</span>
-              {challenge.endDate}
-            </p>
-          </div>
-
-          <div className="pt-2 border-t text-sm text-gray-600">
-            <p>
-              <span className="font-semibold">Created By:</span>
-              {challenge.createdBy}
-            </p>
-          </div>
-
-          <div className="pt-4">
-            <button
-              //   onClick={() => onJoin && onJoin(challenge)}
-              className="w-full md:w-auto rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium px-6 py-2 transition-colors"
-            >
-              Join Challenge
-            </button>
-          </div>
-        </div>
-      </div>
+    <div className="py-10">
+      {" "}
+      <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+        {" "}
+        <div className="flex flex-col md:flex-row">
+          {" "}
+          <img
+            src={challenge.photo}
+            alt="Challenge"
+            className="w-full md:w-1/2 object-cover"
+          />{" "}
+          <div className="p-6 flex-1 space-y-4">
+            {" "}
+            <div>
+              {" "}
+              <h2 className="text-2xl font-bold">{challenge.title}</h2>{" "}
+              <p className="text-emerald-600 font-medium">
+                {challenge.category}
+              </p>{" "}
+            </div>{" "}
+            <p className="text-gray-700 leading-relaxed">
+              {challenge.description}
+            </p>{" "}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-gray-700">
+              {" "}
+              <p>
+                <span className="font-semibold">Duration:</span>{" "}
+                {challenge.duration} days ={" "}
+              </p>{" "}
+              <p>
+                <span className="font-semibold">Target:</span>{" "}
+                {challenge.target}{" "}
+              </p>{" "}
+              <p>
+                {" "}
+                <span className="font-semibold">Participants:</span>
+                {challenge.participants || 0}{" "}
+              </p>{" "}
+              <p>
+                {" "}
+                <span className="font-semibold">Impact Metric:</span>{" "}
+                {challenge.impact}{" "}
+              </p>
+            </div>
+            <div className="pt-4">
+              <button
+                onClick={handleJoin}
+                disabled={joined}
+                className={`w-full md:w-auto rounded-lg text-white text-sm font-medium px-6 py-2 transition-colors ${
+                  joined
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-emerald-500 hover:bg-emerald-600"
+                }`}
+              >
+                {joined ? "Joined" : "Join Challenge"}{" "}
+              </button>{" "}
+            </div>{" "}
+          </div>{" "}
+        </div>{" "}
+      </div>{" "}
     </div>
-   </div>
   );
-}
+};
+
+export default ChallengeCardDetails;

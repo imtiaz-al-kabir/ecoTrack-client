@@ -65,7 +65,7 @@ const AddNewChallenge = () => {
       endDate: form.endDate.value,
       duration,
       target: form.target.value,
-      participants: form.participants.value,
+      participants: 0,
       impact: form.impact.value,
       createdBy: form.createdBy.value,
       photo: form.photo.value,
@@ -196,17 +196,6 @@ const AddNewChallenge = () => {
               name="target"
               className="mt-1 block w-full rounded-lg border border-gray-200 px-3 py-2"
               placeholder="Reduce plastic waste"
-            />
-          </div>
-
-          {/* Participants */}
-          <div>
-            <label className="block text-sm font-medium">Participants</label>
-            <input
-              type="number"
-              name="participants"
-              className="mt-1 block w-full rounded-lg border border-gray-200 px-3 py-2"
-              min={0}
             />
           </div>
 
