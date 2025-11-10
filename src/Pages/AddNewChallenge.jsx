@@ -1,4 +1,5 @@
 import { use, useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import { AuthContext } from "../Context/AuthContext";
 import useAxiosSecure from "../Hook/useAxiosSecure";
 
@@ -75,8 +76,13 @@ const AddNewChallenge = () => {
       axiosSecure.post("/challenges", challengeData).then((data) => {
         const result = data.data;
         if (result) {
-          alert("created");
-          console.log(result)
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Challenge has been created",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         }
       });
     } catch (err) {
@@ -86,14 +92,14 @@ const AddNewChallenge = () => {
   };
 
   return (
-    <div className="container mx-auto pb-12">
-      <h2 className="text-2xl font-semibold text-center py-10">
+    <div className="container mx-auto pb-12 px-5">
+      <h2 className="text-2xl font-semibold text-center py-10 ">
         Add New Challenge
       </h2>
 
       <form
         onSubmit={handleSubmit}
-        className="max-w-3xl mx-auto bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-md space-y-6"
+        className="max-w-3xl mx-auto bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-md space-y-6 "
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Title */}

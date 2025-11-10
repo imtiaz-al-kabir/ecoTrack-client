@@ -67,7 +67,7 @@ const MyActivities = () => {
     return <p className="p-4">You haven't joined any challenges yet.</p>;
 
   return (
-    <div className="max-w-5xl mx-auto py-10 space-y-4">
+    <div className="max-w-5xl mx-auto py-10 space-y-4 px-5">
       <h2 className="text-2xl font-bold">My Joined Challenges</h2>
 
       <div className="grid grid-cols-1  gap-4">

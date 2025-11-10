@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Slider from "react-slick";
 
 // in your index.js or App.js
+import { FaArrowRightLong } from "react-icons/fa6";
 import { Link } from "react-router";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
@@ -42,9 +43,12 @@ const Hero = () => {
               <p className="mt-2 text-lg">{challenge.target}</p>
               <Link
                 to="/challenges"
-                className="mt-4 px-6 py-2 bg-green-500 hover:bg-green-600 rounded-lg text-white font-semibold"
+                className="  btn bg-green-500 hover:bg-green-600 rounded-lg text-white font-semibold"
               >
                 Explore Challenges
+                <span>
+                  <FaArrowRightLong />{" "}
+                </span>
               </Link>
             </div>
           </div>

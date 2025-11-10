@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router";
+import Swal from "sweetalert2";
 import { AuthContext } from "../Context/AuthContext";
 import useAxiosInstance from "../Hook/useAxiosInstance";
 import Loading from "./Loading";
@@ -65,7 +66,13 @@ const ChallengeCardDetails = () => {
         challengeId: id,
       });
       if (res.data?.insertedId) {
-        toast.success("Joined challenge successfully!");
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Joined challenge successfully!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
 
         setChallenge((prevChallenge) => ({
           ...prevChallenge,

@@ -7,7 +7,7 @@ export function ChallengeCard({ challenge }) {
   return (
     <div className="max-w-sm  bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
       <img src={photo} alt="image" className="w-full h-48 object-cover" />
-      <div className="p-4 space-y-2">
+      <div className="p-4 space-y-2 min-h-full">
         <h3 className="text-xl font-semibold text-gray-800">{title}</h3>
         <p className="text-sm text-emerald-600 font-medium">{category}</p>
         <p className="text-sm text-gray-600 line-clamp-2">{description}</p>

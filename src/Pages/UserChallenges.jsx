@@ -16,7 +16,7 @@ const UserChallenges = () => {
   };
 
   return (
-    <div className="container mx-auto py-10 space-y-4">
+    <div className="container mx-auto py-10 space-y-4 px-5">
       <h2 className="text-2xl font-bold">All Joined Challenges</h2>
       <div className="grid grid-cols-1  nd:grid-cols-2 lg:grid-cols-3 gap-5">
         {joined.map((jc) => (
