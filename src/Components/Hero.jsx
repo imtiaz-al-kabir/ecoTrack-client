@@ -28,14 +28,14 @@ const Hero = () => {
   }, [axiosInstance]);
 
   return (
-    <div className="  py-10">
+    <div className="pb-10">
       <Slider {...settings}>
         {challenges.map((challenge, index) => (
           <div key={index} className="relative w-full">
             <img
               src={challenge.photo}
               alt={challenge.title}
-              className="w-full h-[400px] object-cover rounded-lg"
+              className="w-full h-[500px] object-cover rounded-lg"
             />
             <div className="absolute inset-0 flex flex-col justify-center items-center p-10 bg-opacity-30 text-white text-center">
               <h2 className="text-4xl font-bold">{challenge.title}</h2>

@@ -71,12 +71,14 @@ const AddNewChallenge = () => {
       photo: form.photo.value,
     };
 
-    console.log("✅ Sending to backend:", challengeData);
-
     try {
-      axiosSecure
-        .post("/challenges", challengeData)
-        .then((data) => console.log(data.data));
+      axiosSecure.post("/challenges", challengeData).then((data) => {
+        const result = data.data;
+        if (result) {
+          alert("created");
+          console.log(result)
+        }
+      });
     } catch (err) {
       console.error("Error:", err);
       alert("❌ Server error occurred.");
