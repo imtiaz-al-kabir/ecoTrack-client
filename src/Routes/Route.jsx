@@ -1,18 +1,18 @@
 import { createBrowserRouter } from "react-router";
 
+import ChallengeCardDetails from "../Components/ChallengeCardDetails";
+import ResetPassword from "../Components/ResetPassword";
 import RootLayout from "../Layouts/RootLayout";
 import AddNewChallenge from "../Pages/AddNewChallenge";
 import Challenges from "../Pages/Challenges";
 import ErrorPage from "../Pages/ErrorPage";
+import Events from "../Pages/Events";
 import Home from "../Pages/Home";
 import Login from "../Pages/Login";
-import Register from "../Pages/Register";
-import UserChallenges from "../Pages/UserChallenges";
-import ChallengeCardDetails from "../Components/ChallengeCardDetails";
 import MyActivities from "../Pages/MyActivities";
-import Events from "../Pages/Events";
+import Register from "../Pages/Register";
 import Tips from "../Pages/Tips";
-
+import UserChallenges from "../Pages/UserChallenges";
 
 const router = createBrowserRouter([
   {
@@ -47,7 +47,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/events",
-        Component:Events,
+        Component: Events,
       },
       {
         path: "/tips",
@@ -56,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         Component: Login,
+      },
+      {
+        path: "/reset-password",
+        Component: ResetPassword,
       },
       {
         path: "/register",
