@@ -14,7 +14,7 @@ const UpcomingEvents = () => {
 
   return (
     <div className="container mx-auto pb-10">
-      <h1 className="font-bold text-2xl text-center">Upcoming Events</h1>
+      <h1 className="text-3xl font-bold text-center text-emerald-600  pb-5">Upcoming Events</h1>
       <div className="flex flex-wrap justify-center">
         {events.map((event, index) => (
           <EventsCard key={index} event={event} />
