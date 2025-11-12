@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { use } from "react";
+import { use, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
 
@@ -7,13 +7,22 @@ const Register = () => {
   const { createUser, googleLogin } = use(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-
+  const [error, setError] = useState("");
   const handleRegisterForm = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const email = e.target.email.value;
     const photo = e.target.photo.value;
     const password = e.target.password.value;
+
+    const passRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
+    if (!passRegex.test(password)) {
+      setError(
+        "Password must have at least 1 uppercase, 1 lowercase,at least 1 special characters and at least 6 characters long."
+      );
+      return;
+    }
 
     createUser(email, password)
       .then(() => navigate(location.state?.from || "/"))
@@ -123,7 +132,7 @@ const Register = () => {
               required
             />
           </motion.div>
-
+          {error && <p className="text-red-500 text-sm">{error}</p>}
           {/* Register Button */}
           <motion.button
             type="submit"

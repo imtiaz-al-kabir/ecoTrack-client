@@ -1,8 +1,8 @@
+import { updatePassword, updateProfile } from "firebase/auth";
 import { motion } from "motion/react";
-import { useContext, useState, useEffect, use } from "react";
+import { use, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Context/AuthContext";
-import {  updateProfile, updatePassword } from "firebase/auth";
 import { auth } from "../Firebase/firebase.config";
 
 const UpdateProfile = () => {
@@ -13,8 +13,7 @@ const UpdateProfile = () => {
   const [photoURL, setPhotoURL] = useState("");
   const [password, setPassword] = useState("");
 
- 
-console.log(name,photoURL,password)
+  console.log(name, photoURL, password);
   useEffect(() => {
     if (user) {
       setName(user.displayName || "");
@@ -27,19 +26,16 @@ console.log(name,photoURL,password)
     setLoading(true);
 
     try {
-      // 🔹 Update Firebase Profile (displayName & photoURL)
       if (auth.currentUser) {
         await updateProfile(auth.currentUser, {
           displayName: name,
           photoURL: photoURL || null,
         });
 
-        // 🔹 Update Firebase password if provided
         if (password) {
           await updatePassword(auth.currentUser, password);
         }
 
-        // 🔹 Update AuthContext
         setUser({ ...user, displayName: name, photoURL });
 
         Swal.fire({
@@ -55,11 +51,12 @@ console.log(name,photoURL,password)
       Swal.fire({
         icon: "error",
         title: "Update Failed",
-        text: err.message || "Something went wrong while updating your profile.",
+        text:
+          err.message || "Something went wrong while updating your profile.",
       });
     } finally {
       setLoading(false);
-      setPassword(""); // Clear password field
+      setPassword("");
     }
   };
 
@@ -90,7 +87,9 @@ console.log(name,photoURL,password)
 
           {/* Email (read-only) */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">Email</label>
+            <label className="block text-gray-700 font-medium mb-1">
+              Email
+            </label>
             <input
               type="email"
               value={user?.email || ""}
@@ -101,7 +100,9 @@ console.log(name,photoURL,password)
 
           {/* Photo URL */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">Photo URL</label>
+            <label className="block text-gray-700 font-medium mb-1">
+              Photo URL
+            </label>
             <input
               type="text"
               value={photoURL}
@@ -113,7 +114,9 @@ console.log(name,photoURL,password)
 
           {/* Password */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">New Password</label>
+            <label className="block text-gray-700 font-medium mb-1">
+              New Password
+            </label>
             <input
               type="password"
               value={password}
