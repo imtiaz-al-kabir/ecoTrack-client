@@ -15,6 +15,7 @@ import Tips from "../Pages/Tips";
 import UpdateChallenge from "../Pages/UpdateChallenge";
 import UpdateProfile from "../Pages/UpdateProfile";
 import UserChallenges from "../Pages/UserChallenges";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -37,30 +38,53 @@ const router = createBrowserRouter([
       },
       {
         path: "/update-challenge/:id",
-        Component: UpdateChallenge,
+        element: (
+          <PrivateRoute>
+            <UpdateChallenge />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/user-challenge",
-        Component: UserChallenges,
+        element: (
+          <PrivateRoute>
+            <UserChallenges />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/my-activities",
-        Component: MyActivities,
+        element: (
+          <PrivateRoute>
+            <MyActivities />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/challenges/add",
-        Component: AddNewChallenge,
+
+        element: (
+          <PrivateRoute>
+            <AddNewChallenge />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/events",
+
         Component: Events,
       },
       {
         path: "/update-profile",
-        Component: UpdateProfile,
+        element: (
+          <PrivateRoute>
+            <UpdateProfile />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/tips",
+
         Component: Tips,
       },
       {

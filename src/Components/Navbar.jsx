@@ -9,12 +9,14 @@ const Navbar = () => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Challenges", path: "/challenges" },
+    { name: "Events", path: "/events" },
+    { name: "Tips", path: "/tips" },
     ...(user
       ? [
           { name: "Add New Challenge", path: "/challenges/add" },
-          { name: "Tips", path: "/tips" },
+
           { name: "User Challenges", path: "/user-challenge" },
-          { name: "Events", path: "/events" },
+
           { name: "My Activities", path: "/my-activities" },
         ]
       : []),

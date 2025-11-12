@@ -15,7 +15,7 @@ const Login = () => {
 
     loginUser(email, password)
       .then(() => {
-        navigate(location.state?.from || "/");
+        navigate(location.state?location.state : "/");
       })
       .catch((err) => console.log(err));
   };
@@ -23,7 +23,7 @@ const Login = () => {
   const handleGoogle = () => {
     googleLogin()
       .then(() => {
-        navigate(location.state?.from || "/");
+        navigate(location.state?location.state: "/");
       })
       .catch((err) => console.log(err));
   };

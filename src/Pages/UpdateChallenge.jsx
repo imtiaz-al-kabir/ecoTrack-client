@@ -15,7 +15,6 @@ const UpdateChallenge = () => {
   const [challenge, setChallenge] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // 🔹 Fetch challenge to prefill form
   useEffect(() => {
     const fetchChallenge = async () => {
       try {
@@ -31,7 +30,7 @@ const UpdateChallenge = () => {
     fetchChallenge();
   }, [id,axiosInstance]);
 
-  // 🔹 Handle form submit (update)
+
   const handleUpdate = async (e) => {
     e.preventDefault();
 

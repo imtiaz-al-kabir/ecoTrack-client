@@ -42,7 +42,7 @@ const Stats = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.2, duration: 0.5 }}
             whileHover={{ scale: 1.05 }}
-            className="p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl shadow-lg flex flex-col items-center justify-center"
+            className="p-6 bg-linear-to-br from-green-50 to-green-100 rounded-xl shadow-lg flex flex-col items-center justify-center"
           >
             <div className="mb-2 text-3xl">{item.icon}</div>
             <div className="text-4xl font-bold text-emerald-700">

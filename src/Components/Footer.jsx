@@ -2,10 +2,12 @@ import { Link } from "react-router";
 
 const Footer = () => {
   return (
-   <footer className="flex flex-col items-center justify-center w-full py-20
+    <footer
+      className="flex flex-col items-center justify-center w-full py-20
 bg-linear-to-r from-emerald-700/90 via-teal-600/80 to-cyan-500/70
 hover:from-emerald-600 hover:via-teal-500 hover:to-cyan-400
-text-white transition-colors">
+text-white transition-colors"
+    >
       {/* 🌱 EcoTrack logo */}
       <div className="flex items-center">
         {" "}

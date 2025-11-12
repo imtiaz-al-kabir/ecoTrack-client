@@ -25,13 +25,13 @@ const Register = () => {
     }
 
     createUser(email, password)
-      .then(() => navigate(location.state?.from || "/"))
+      .then(() => navigate(location.state ? location.state : "/"))
       .catch((err) => console.log(err.message));
   };
 
   const handleGoogle = () => {
     googleLogin()
-      .then(() => navigate(location.state?.from || "/"))
+      .then(() => navigate(location.state ? location.state : "/"))
       .catch((err) => console.log(err));
   };
 
@@ -138,7 +138,7 @@ const Register = () => {
             type="submit"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300 }}
-            className="w-full rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-500 hover:to-teal-600 text-white py-2 transition-all"
+            className="w-full rounded-xl bg-linear-to-r from-emerald-400 to-teal-500 hover:from-emerald-500 hover:to-teal-600 text-white py-2 transition-all"
           >
             Sign up
           </motion.button>
