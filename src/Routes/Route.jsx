@@ -12,6 +12,8 @@ import Login from "../Pages/Login";
 import MyActivities from "../Pages/MyActivities";
 import Register from "../Pages/Register";
 import Tips from "../Pages/Tips";
+import UpdateChallenge from "../Pages/UpdateChallenge";
+import UpdateProfile from "../Pages/UpdateProfile";
 import UserChallenges from "../Pages/UserChallenges";
 
 const router = createBrowserRouter([
@@ -34,6 +36,10 @@ const router = createBrowserRouter([
         Component: ChallengeCardDetails,
       },
       {
+        path: "/update-challenge/:id",
+        Component: UpdateChallenge,
+      },
+      {
         path: "/user-challenge",
         Component: UserChallenges,
       },
@@ -48,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: "/events",
         Component: Events,
+      },
+      {
+        path: "/update-profile",
+        Component: UpdateProfile,
       },
       {
         path: "/tips",

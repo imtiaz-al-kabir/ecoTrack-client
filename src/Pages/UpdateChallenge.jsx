@@ -2,9 +2,9 @@ import { motion } from "motion/react";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import Swal from "sweetalert2";
+import Loading from "../Components/Loading";
 import { AuthContext } from "../Context/AuthContext";
 import useAxiosInstance from "../Hook/useAxiosInstance";
-import Loading from "./Loading";
 
 const UpdateChallenge = () => {
   const { id } = useParams();
@@ -29,7 +29,7 @@ const UpdateChallenge = () => {
       }
     };
     fetchChallenge();
-  }, [id]);
+  }, [id,axiosInstance]);
 
   // 🔹 Handle form submit (update)
   const handleUpdate = async (e) => {
@@ -48,11 +48,14 @@ const UpdateChallenge = () => {
     };
 
     try {
-      const res = await axiosInstance.put(`/challenges/${id}`, updatedChallenge);
+      const res = await axiosInstance.patch(
+        `/challenges/${id}`,
+        updatedChallenge
+      );
 
       if (res.data.modifiedCount > 0) {
         Swal.fire("Success!", "Challenge updated successfully.", "success");
-        navigate(`/challenge/${id}`);
+        navigate(`/challenges/${id}`);
       } else {
         Swal.fire("No Changes", "No updates were made.", "info");
       }
@@ -63,7 +66,10 @@ const UpdateChallenge = () => {
   };
 
   if (loading) return <Loading />;
-  if (!challenge) return <p className="text-center py-10 text-gray-600">Challenge not found.</p>;
+  if (!challenge)
+    return (
+      <p className="text-center py-10 text-gray-600">Challenge not found.</p>
+    );
 
   return (
     <motion.div
@@ -77,9 +83,14 @@ const UpdateChallenge = () => {
           Update Challenge
         </h2>
 
-        <form onSubmit={handleUpdate} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form
+          onSubmit={handleUpdate}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Title
+            </label>
             <input
               name="title"
               defaultValue={challenge.title}
@@ -90,7 +101,9 @@ const UpdateChallenge = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Category
+            </label>
             <input
               name="category"
               defaultValue={challenge.category}
@@ -101,7 +114,9 @@ const UpdateChallenge = () => {
           </div>
 
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Description
+            </label>
             <textarea
               name="description"
               defaultValue={challenge.description}
@@ -113,7 +128,9 @@ const UpdateChallenge = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Duration (days)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Duration (days)
+            </label>
             <input
               name="duration"
               type="number"
@@ -124,7 +141,9 @@ const UpdateChallenge = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Target</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Target
+            </label>
             <input
               name="target"
               defaultValue={challenge.target}
@@ -134,7 +153,9 @@ const UpdateChallenge = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Impact Metric</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Impact Metric
+            </label>
             <input
               name="impact"
               defaultValue={challenge.impact}
@@ -144,7 +165,9 @@ const UpdateChallenge = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Photo URL</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Photo URL
+            </label>
             <input
               name="photo"
               defaultValue={challenge.photo}
@@ -154,22 +177,30 @@ const UpdateChallenge = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Start Date
+            </label>
             <input
               name="startDate"
               type="date"
-              defaultValue={new Date(challenge.startDate).toISOString().split("T")[0]}
+              defaultValue={
+                new Date(challenge.startDate).toISOString().split("T")[0]
+              }
               required
               className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-emerald-400"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              End Date
+            </label>
             <input
               name="endDate"
               type="date"
-              defaultValue={new Date(challenge.endDate).toISOString().split("T")[0]}
+              defaultValue={
+                new Date(challenge.endDate).toISOString().split("T")[0]
+              }
               required
               className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-emerald-400"
             />

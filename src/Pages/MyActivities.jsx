@@ -81,7 +81,7 @@ const MyActivities = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
               whileHover={{ scale: 1.02 }}
-              className="p-5 rounded-xl bg-gradient-to-r from-green-100 to-green-200 shadow-md flex flex-col md:flex-row md:items-center md:justify-between"
+              className="p-5 rounded-xl bg-linear-to-r from-green-100 to-green-200 shadow-md flex flex-col md:flex-row md:items-center md:justify-between"
             >
               <div className="mb-3 md:mb-0">
                 <p className="text-gray-700">

@@ -142,7 +142,7 @@ const Navbar = () => {
             >
               <li className="text-center font-semibold">{user.displayName}</li>
               <li>
-                <Link>Profile</Link>
+                <Link to="/update-profile">Profile</Link>
               </li>
               <li>
                 <button

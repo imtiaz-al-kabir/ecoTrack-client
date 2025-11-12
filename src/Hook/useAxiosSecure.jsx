@@ -13,13 +13,14 @@ const useAxiosSecure = () => {
       config.headers.authorization = `Bearer ${user?.accessToken}`;
       return config;
     });
-    const resInterceptor = axiosSecure.interceptors.response.use(res=>{
-      return res
-    },err=>{
-
-
-      console.log(err)
-    });
+    const resInterceptor = axiosSecure.interceptors.response.use(
+      (res) => {
+        return res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
     return () => {
       axiosSecure.interceptors.request.eject(reqInterceptor);
       axiosSecure.interceptors.response.eject(resInterceptor);

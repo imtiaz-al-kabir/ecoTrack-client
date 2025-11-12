@@ -4,11 +4,13 @@ import { useNavigate, useParams } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Context/AuthContext";
 import useAxiosInstance from "../Hook/useAxiosInstance";
+import useAxiosSecure from "../Hook/useAxiosSecure";
 import Loading from "./Loading";
 
 const ChallengeCardDetails = () => {
   const { id } = useParams();
   const axiosInstance = useAxiosInstance();
+  const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -52,7 +54,7 @@ const ChallengeCardDetails = () => {
   const checkJoined = async () => {
     if (!user?.email) return;
     try {
-      const res = await axiosInstance.get(`/userChallenges/${user.email}`);
+      const res = await axiosSecure.get(`/userChallenges/${user.email}`);
       const hasJoined = res.data.some((jc) => {
         const joinedChallengeId = getChallengeIdString(jc.challengeId);
         return joinedChallengeId === id;
@@ -85,7 +87,7 @@ const ChallengeCardDetails = () => {
     if (joined) return;
 
     try {
-      const res = await axiosInstance.post("/userChallenges", {
+      const res = await axiosSecure.post("/userChallenges", {
         userId: user.email,
         challengeId: id,
       });
