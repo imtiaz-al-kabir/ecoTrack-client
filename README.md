@@ -1,16 +1,31 @@
-# React + Vite
+# 🌱 EcoTrack – Empowering Sustainable Living
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### 🔗 Live Site: [https://ecotrack-client.web.app](https://ecotrack-client.web.app)
 
-Currently, two official plugins are available:
+EcoTrack is a modern sustainability platform that encourages users to adopt eco-friendly habits through interactive environmental challenges. From reducing waste to conserving energy, users can take actionable steps toward a greener planet — one challenge at a time.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Key Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🌍 **Explore Eco-Challenges** – Discover curated challenges across categories like Waste Reduction, Water Conservation, Green Living, and more.  
+- 👥 **Join & Track Progress** – Log in to participate in challenges, track your journey, and stay motivated with real-time progress updates.  
+- 📊 **Insightful Statistics** – View collective impact metrics such as total participants and environmental savings in the stats dashboard.  
+- 🔐 **Secure User Authentication** – Firebase authentication ensures a safe and seamless user experience.  
+- 🧩 **Responsive, Modern UI** – Built with React, Tailwind CSS, and Framer Motion for a visually appealing, fully responsive design.  
+- ⚙️ **Dynamic Backend Integration** – Node.js and MongoDB power the server-side operations, ensuring reliable and efficient data handling.  
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Tech Stack
+
+| Layer | Technologies |
+|-------|---------------|
+| **Frontend** | React.js, Tailwind CSS, Framer Motion, React Router, Axios |
+| **Backend** | Node.js, Express.js, MongoDB |
+| **Authentication** | Firebase Authentication |
+| **Hosting** | Firebase (Client) & Render / Vercel (Server) |
+
+---
+
+## 🚀 Getting Started
