@@ -20,6 +20,7 @@ const AddNewChallenge = () => {
   const [errors, setErrors] = useState({});
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [loading, setLoading] = useState(false); // ✅ new state for submit loading
 
   // Auto-calculate duration
   useEffect(() => {
@@ -73,7 +74,9 @@ const AddNewChallenge = () => {
     };
 
     try {
+      setLoading(true); // ✅ Disable button
       const res = await axiosSecure.post("/challenges", challengeData);
+
       if (res.data) {
         Swal.fire({
           position: "top-center",
@@ -95,6 +98,8 @@ const AddNewChallenge = () => {
         title: "Oops...",
         text: "Server error occurred!",
       });
+    } finally {
+      setLoading(false); // ✅ Re-enable button
     }
   };
 
@@ -259,9 +264,14 @@ const AddNewChallenge = () => {
           <motion.button
             type="submit"
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 font-medium shadow-sm cursor-pointer"
+            disabled={loading} // ✅ disable while loading
+            className={`inline-flex items-center gap-2 rounded-lg text-white px-4 py-2 font-medium shadow-sm cursor-pointer transition ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-emerald-500 hover:bg-emerald-600"
+            }`}
           >
-            Create Challenge
+            {loading ? "Creating..." : "Create Challenge"} {/* ✅ loading text */}
           </motion.button>
 
           <button
@@ -272,6 +282,7 @@ const AddNewChallenge = () => {
               setDuration(0);
               setErrors({});
             }}
+            disabled={loading} // optional: disable reset too
             className="inline-flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm cursor-pointer"
           >
             Reset

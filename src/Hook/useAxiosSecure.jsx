@@ -1,5 +1,5 @@
 import axios from "axios";
-import { use } from "react";
+import { use, useEffect } from "react";
 import { AuthContext } from "../Context/AuthContext";
 
 const axiosSecure = axios.create({
@@ -8,12 +8,23 @@ const axiosSecure = axios.create({
 
 const useAxiosSecure = () => {
   const { user } = use(AuthContext);
-  axiosSecure.interceptors.request.use((config) => {
-    // Do something before request is sent
+  useEffect(() => {
+    const reqInterceptor = axiosSecure.interceptors.request.use((config) => {
+      config.headers.authorization = `Bearer ${user?.accessToken}`;
+      return config;
+    });
+    const resInterceptor = axiosSecure.interceptors.response.use(res=>{
+      return res
+    },err=>{
 
-    config.headers.authorization = `Bearer ${user?.accessToken}`;
-    return config;
-  });
+
+      console.log(err)
+    });
+    return () => {
+      axiosSecure.interceptors.request.eject(reqInterceptor);
+      axiosSecure.interceptors.response.eject(resInterceptor);
+    };
+  }, [user]);
   return axiosSecure;
 };
 

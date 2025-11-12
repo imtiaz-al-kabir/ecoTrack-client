@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAtUdaCnIUPgSje75mTNpcM5FM_1wd3mo8",
-  authDomain: "ecotrack-client.firebaseapp.com",
-  projectId: "ecotrack-client",
-  storageBucket: "ecotrack-client.firebasestorage.app",
-  messagingSenderId: "359875211935",
-  appId: "1:359875211935:web:8518afc1586cd8c25fa8aa"
+  apiKey: import.meta.env.VITE_APIKEY,
+  authDomain: import.meta.env.VITE_AUTHDOMAIN,
+  projectId: import.meta.env.VITE_PROJECTID,
+  storageBucket: import.meta.env.VITE_STORAGEBUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGINGSENDERID,
+  appId: import.meta.env.VITE_APPID,
 };
 
 // Initialize Firebase
