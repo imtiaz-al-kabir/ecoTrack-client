@@ -17,7 +17,7 @@ const Events = () => {
       {loading ? (
         <SkeletonLoader count={10} />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 container mx-auto ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 container mx-auto px-5 ">
           {events.map((event, index) => (
             <EventsCard key={index} event={event} />
           ))}

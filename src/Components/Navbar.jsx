@@ -140,16 +140,16 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex="-1"
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box left-1/2 -translate-x-1/2 z-1 mt-2 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-base-100 space-y-2 rounded-box left-1/2 -translate-x-1/2 z-1 mt-2 w-52 p-2 shadow"
             >
               <li className="text-center font-semibold">{user.displayName}</li>
               <li>
-                <Link to="/update-profile">Profile</Link>
+                <Link className="py-2" to="/update-profile">Profile</Link>
               </li>
               <li>
                 <button
                   onClick={handleLogout}
-                  className="btn btn-xs text-white bg-linear-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 transition-all duration-300 "
+                  className="btn  text-white bg-linear-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 transition-all duration-300 "
                 >
                   Logout
                 </button>
@@ -240,16 +240,16 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex="-1"
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box left-1/2 -translate-x-1/2 z-1 mt-2   w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content space-y-2 bg-base-100 rounded-box left-1/2 -translate-x-1/2 z-1 mt-2   w-52 p-2 shadow"
             >
               <li className="text-center font-semibold">{user.displayName}</li>
-              <li>
-                <Link>Profile</Link>
+            <li>
+                <Link className="py-2" to="/update-profile">Profile</Link>
               </li>
               <li>
                 <button
                   onClick={handleLogout}
-                  className="btn btn-xs text-white bg-linear-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 transition-all duration-300 "
+                  className="btn  text-white bg-linear-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 transition-all duration-300 "
                 >
                   Logout
                 </button>
@@ -259,12 +259,14 @@ const Navbar = () => {
         ) : (
           <div className="space-x-5 ">
             <Link
+             onClick={() => setIsMenuOpen(false)}
               to="/login"
               className="btn btn-outline btn-accent  px-8 py-2.5  transition-all duration-500"
             >
               Login
             </Link>
             <Link
+             onClick={() => setIsMenuOpen(false)}
               to="/register"
               className="bg-linear-to-r from-emerald-400 to-teal-500 hover:from-emerald-500 hover:to-teal-600 text-white px-8 py-2.5 transition-all btn duration-500"
             >

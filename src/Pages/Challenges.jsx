@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ChallengeCard } from "../Components/ChallengeCard";
 import SkeletonLoader from "../Components/SkeletonLoader";
 import { AuthContext } from "../Context/AuthContext";
@@ -45,7 +45,14 @@ const Challenges = () => {
     };
 
     fetchChallenges();
-  }, [axiosInstance, categoryFilter, startDate, endDate, minParticipants, maxParticipants]);
+  }, [
+    axiosInstance,
+    categoryFilter,
+    startDate,
+    endDate,
+    minParticipants,
+    maxParticipants,
+  ]);
 
   // Filter search term client-side
   const filteredChallenges = challenges.filter((c) =>
@@ -53,7 +60,7 @@ const Challenges = () => {
   );
 
   return (
-    <div className="container mx-auto py-12 px-4">
+    <div className="container mx-auto py-12 px-5">
       {/* Filters Panel */}
       <div className="bg-white shadow-lg rounded-2xl p-6 mb-10 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Search */}

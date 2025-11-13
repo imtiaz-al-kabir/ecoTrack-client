@@ -15,7 +15,7 @@ const Login = () => {
 
     loginUser(email, password)
       .then(() => {
-        navigate(location.state?location.state : "/");
+        navigate(location.state ? location.state : "/");
       })
       .catch((err) => console.log(err));
   };
@@ -23,13 +23,13 @@ const Login = () => {
   const handleGoogle = () => {
     googleLogin()
       .then(() => {
-        navigate(location.state?location.state: "/");
+        navigate(location.state ? location.state : "/");
       })
       .catch((err) => console.log(err));
   };
 
   return (
-    <div className="bg-[#f5f5f5] min-h-screen flex justify-center items-center">
+    <div className="bg-[#f5f5f5] min-h-screen flex px-5 justify-center items-center">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -66,7 +66,7 @@ const Login = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
-            className="flex items-center w-full border border-gray-300 rounded-full h-12 px-4 gap-2"
+            className="flex items-center w-full border border-gray-300 rounded-full h-12 px-4  gap-2"
           >
             <svg
               width="16"
@@ -86,7 +86,7 @@ const Login = () => {
               type="email"
               name="email"
               placeholder="Email id"
-              className="outline-none w-full bg-transparent text-gray-600 placeholder-gray-400"
+              className="outline-none w-full bg-transparent text-gray-600  placeholder-gray-400"
               required
             />
           </motion.div>
