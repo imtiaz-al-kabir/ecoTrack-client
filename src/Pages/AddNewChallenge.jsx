@@ -20,9 +20,9 @@ const AddNewChallenge = () => {
   const [errors, setErrors] = useState({});
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
 
-  
+
   useEffect(() => {
     if (startDate && endDate) {
       const s = new Date(startDate);
@@ -74,7 +74,7 @@ const AddNewChallenge = () => {
     };
 
     try {
-      setLoading(true); 
+      setLoading(true);
       const res = await axiosSecure.post("/challenges", challengeData);
 
       if (res.data) {
@@ -99,22 +99,25 @@ const AddNewChallenge = () => {
         text: "Server error occurred!",
       });
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
   return (
-    <div className="container mx-auto pb-12 px-5">
-      <h2 className="text-3xl font-bold text-center py-10 text-emerald-600">
-        Add New Challenge
-      </h2>
+    <div className="w-full">
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-800">Add New Challenge</h2>
+          <p className="text-sm text-gray-500">Create a new challenge for the community.</p>
+        </div>
+      </div>
 
       <motion.form
         onSubmit={handleSubmit}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-3xl mx-auto bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg space-y-6"
+        className="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-sm border border-gray-100 space-y-6"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Title */}
@@ -122,9 +125,8 @@ const AddNewChallenge = () => {
             <label className="block text-sm font-medium">Title *</label>
             <input
               name="title"
-              className={`mt-1 block w-full rounded-lg border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 ${
-                errors.title ? "border-red-400" : "border-gray-200"
-              }`}
+              className={`mt-1 block w-full rounded-lg border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 ${errors.title ? "border-red-400" : "border-gray-200"
+                }`}
               placeholder="Enter Title"
             />
             {errors.title && (
@@ -153,9 +155,8 @@ const AddNewChallenge = () => {
             <textarea
               name="description"
               rows={4}
-              className={`mt-1 block w-full rounded-lg border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 ${
-                errors.description ? "border-red-400" : "border-gray-200"
-              }`}
+              className={`mt-1 block w-full rounded-lg border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 ${errors.description ? "border-red-400" : "border-gray-200"
+                }`}
               placeholder="Describe the challenge and rules..."
             />
             {errors.description && (
@@ -171,9 +172,8 @@ const AddNewChallenge = () => {
               name="startDate"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className={`mt-1 block w-full rounded-lg border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 ${
-                errors.startDate ? "border-red-400" : "border-gray-200"
-              }`}
+              className={`mt-1 block w-full rounded-lg border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 ${errors.startDate ? "border-red-400" : "border-gray-200"
+                }`}
             />
             {errors.startDate && (
               <p className="text-xs text-red-600 mt-1">{errors.startDate}</p>
@@ -188,9 +188,8 @@ const AddNewChallenge = () => {
               name="endDate"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
-              className={`mt-1 block w-full rounded-lg border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 ${
-                errors.endDate ? "border-red-400" : "border-gray-200"
-              }`}
+              className={`mt-1 block w-full rounded-lg border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 ${errors.endDate ? "border-red-400" : "border-gray-200"
+                }`}
             />
             {errors.endDate && (
               <p className="text-xs text-red-600 mt-1">{errors.endDate}</p>
@@ -242,9 +241,8 @@ const AddNewChallenge = () => {
               defaultValue={user?.email}
               name="createdBy"
               readOnly
-              className={`mt-1 block w-full rounded-lg border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 ${
-                errors.createdBy ? "border-red-400" : "border-gray-200"
-              }`}
+              className={`mt-1 block w-full rounded-lg border px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 ${errors.createdBy ? "border-red-400" : "border-gray-200"
+                }`}
             />
           </div>
 
@@ -264,14 +262,13 @@ const AddNewChallenge = () => {
           <motion.button
             type="submit"
             whileTap={{ scale: 0.95 }}
-            disabled={loading} 
-            className={`inline-flex items-center gap-2 rounded-lg text-white px-4 py-2 font-medium shadow-sm cursor-pointer transition ${
-              loading
+            disabled={loading}
+            className={`inline-flex items-center gap-2 rounded-lg text-white px-4 py-2 font-medium shadow-sm cursor-pointer transition ${loading
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-emerald-500 hover:bg-emerald-600"
-            }`}
+              }`}
           >
-            {loading ? "Creating..." : "Create Challenge"} 
+            {loading ? "Creating..." : "Create Challenge"}
           </motion.button>
 
           <button

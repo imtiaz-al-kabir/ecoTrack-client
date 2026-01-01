@@ -1,10 +1,12 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 
 import ChallengeCardDetails from "../Components/ChallengeCardDetails";
 import ResetPassword from "../Components/ResetPassword";
 import RootLayout from "../Layouts/RootLayout";
+import DashboardLayout from "../Layouts/DashboardLayout";
 import AddNewChallenge from "../Pages/AddNewChallenge";
 import Challenges from "../Pages/Challenges";
+import DashboardOverview from "../Pages/DashboardOverview";
 import ErrorPage from "../Pages/ErrorPage";
 import Events from "../Pages/Events";
 import Home from "../Pages/Home";
@@ -16,90 +18,64 @@ import UpdateChallenge from "../Pages/UpdateChallenge";
 import UpdateProfile from "../Pages/UpdateProfile";
 import UserChallenges from "../Pages/UserChallenges";
 import PrivateRoute from "./PrivateRoute";
+import About from "../Pages/About";
+import Contact from "../Pages/Contact";
+import Privacy from "../Pages/Privacy";
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayout,
     errorElement: <ErrorPage />,
-
+    children: [
+      { index: true, Component: Home },
+      { path: "/challenges", Component: Challenges },
+      { path: "/challenges/:id", Component: ChallengeCardDetails },
+      { path: "/events", Component: Events },
+      { path: "/tips", Component: Tips },
+      { path: "/login", Component: Login },
+      { path: "/register", Component: Register },
+      { path: "/reset-password", Component: ResetPassword },
+      { path: "/about", Component: About },
+      { path: "/contact", Component: Contact },
+      { path: "/privacy", Component: Privacy },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
-        Component: Home,
+        element: <DashboardOverview />
       },
       {
-        path: "/challenges",
-        Component: Challenges,
+        path: "profile",
+        element: <UpdateProfile />,
       },
       {
-        path: "/challenges/:id",
-        Component: ChallengeCardDetails,
+        path: "add-challenge",
+        element: <AddNewChallenge />,
       },
       {
-        path: "/update-challenge/:id",
-        element: (
-          <PrivateRoute>
-            <UpdateChallenge />
-          </PrivateRoute>
-        ),
+        path: "my-challenges",
+        element: <UserChallenges />,
       },
       {
-        path: "/user-challenge",
-        element: (
-          <PrivateRoute>
-            <UserChallenges />
-          </PrivateRoute>
-        ),
+        path: "my-activities",
+        element: <MyActivities />,
       },
       {
-        path: "/my-activities",
-        element: (
-          <PrivateRoute>
-            <MyActivities />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "/challenges/add",
-
-        element: (
-          <PrivateRoute>
-            <AddNewChallenge />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "/events",
-
-        Component: Events,
-      },
-      {
-        path: "/update-profile",
-        element: (
-          <PrivateRoute>
-            <UpdateProfile />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "/tips",
-
-        Component: Tips,
-      },
-      {
-        path: "/login",
-        Component: Login,
-      },
-      {
-        path: "/reset-password",
-        Component: ResetPassword,
-      },
-      {
-        path: "/register",
-        Component: Register,
+        path: "update-challenge/:id",
+        element: <UpdateChallenge />,
       },
     ],
   },
 ]);
+
 export default router;

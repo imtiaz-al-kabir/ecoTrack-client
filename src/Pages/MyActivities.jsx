@@ -68,57 +68,64 @@ const MyActivities = () => {
     return <p className="p-4 text-center text-gray-700">You haven't joined any challenges yet.</p>;
 
   return (
-    <div className="max-w-5xl mx-auto py-10 space-y-6 px-5">
-      <h2 className="text-3xl font-bold text-emerald-600 mb-6 text-center">My Joined Challenges</h2>
+    <div className="w-full">
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-800">My Activities</h2>
+          <p className="text-gray-500 text-sm">Track your progress on joined challenges.</p>
+        </div>
+      </div>
 
-      <div className="grid grid-cols-1 gap-4">
-        {joined.map((jc) => {
-          const challengeIdStr = getChallengeIdString(jc.challengeId);
-          return (
-            <motion.div
-              key={jc._id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              whileHover={{ scale: 1.02 }}
-              className="p-5 rounded-xl bg-linear-to-r from-green-100 to-green-200 shadow-md flex flex-col md:flex-row md:items-center md:justify-between"
-            >
-              <div className="mb-3 md:mb-0">
-                <p className="text-gray-700">
-                  <span className="font-semibold">Challenge ID:</span>{" "}
-                  <span className="break-all">{challengeIdStr}</span>
-                </p>
-                <p className="text-gray-700">
-                  <span className="font-semibold">Joined:</span>{" "}
-                  {jc.joinDate
-                    ? new Date(jc.joinDate).toLocaleDateString()
-                    : "—"}
-                </p>
-              </div>
-
-              <div className="flex items-center space-x-4">
-                <div>
-                  <label className="block text-sm text-gray-700 font-semibold">
-                    Status
-                  </label>
-                  <select
-                    value={jc.status || "Not Started"}
-                    onChange={(e) =>
-                      handleStatusChange(jc._id, jc, e.target.value)
-                    }
-                    className="mt-1 block rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-400"
-                  >
-                    {STATUS_OPTIONS.map((s) => (
-                      <option key={s} value={s}>
-                        {s}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-            </motion.div>
-          );
-        })}
+      <div className="overflow-x-auto bg-white rounded-2xl shadow-sm border border-gray-100">
+        <table className="table w-full">
+          {/* head */}
+          <thead className="bg-gray-50 text-gray-500 font-semibold uppercase text-xs">
+            <tr>
+              <th className="py-4 pl-6">Challenge</th>
+              <th>Joined Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100">
+            {joined.map((jc) => {
+              const challengeIdStr = getChallengeIdString(jc.challengeId);
+              // In a real app we might want to fetch challenge details to show title instead of ID
+              return (
+                <tr key={jc._id} className="hover:bg-gray-50 transition-colors">
+                  <td className="pl-6 py-4">
+                    <div className="font-bold text-gray-800 break-all">{challengeIdStr}</div>
+                    <div className="text-xs text-gray-400">ID Reference</div>
+                  </td>
+                  <td>
+                    {jc.joinDate ? new Date(jc.joinDate).toLocaleDateString() : "—"}
+                  </td>
+                  <td>
+                    <span className={`badge border-0 font-medium ${jc.status === "Finished" ? "bg-green-100 text-green-600" :
+                        jc.status === "Ongoing" ? "bg-blue-100 text-blue-600" :
+                          "bg-gray-100 text-gray-600"
+                      }`}>
+                      {jc.status || "Not Started"}
+                    </span>
+                  </td>
+                  <td>
+                    <select
+                      value={jc.status || "Not Started"}
+                      onChange={(e) => handleStatusChange(jc._id, jc, e.target.value)}
+                      className="select select-bordered select-sm w-full max-w-xs focus:ring-2 focus:ring-emerald-400 focus:outline-none"
+                    >
+                      {STATUS_OPTIONS.map((s) => (
+                        <option key={s} value={s}>
+                          {s}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );

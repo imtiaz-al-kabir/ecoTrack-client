@@ -1,12 +1,103 @@
 @import "tailwindcss";
-@plugin "daisyui" {
-  themes: light --default, dark;
-}
-/* --prefersdark */
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@plugin "daisyui";
 
+@theme {
+  --font-sans: "Outfit", sans-serif;
+}
+
+
+
+:root {
+  color-scheme: light;
+  --color-base-100: #ffffff;
+  --color-base-200: #f8fafc;
+  --color-base-300: #f1f5f9;
+  --color-base-content: #0f172a;
+
+  --color-primary: #059669;
+  /* Emerald 600 */
+  --color-primary-content: #ffffff;
+
+  --color-secondary: #84cc16;
+  /* Lime 500 */
+  --color-secondary-content: #1a2e05;
+
+  --color-accent: #06b6d4;
+  /* Cyan 500 */
+  --color-accent-content: #083344;
+
+  --color-neutral: #1f2937;
+  --color-neutral-content: #ffffff;
+
+  --color-info: #3b82f6;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.5rem;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --color-base-100: #0f172a;
+  /* Slate 900 */
+  --color-base-200: #1e293b;
+  --color-base-300: #334155;
+  --color-base-content: #f8fafc;
+
+  --color-primary: #10b981;
+  /* Emerald 500 */
+  --color-primary-content: #022c22;
+
+  --color-secondary: #a3e635;
+  /* Lime 400 */
+  --color-secondary-content: #1a2e05;
+
+  --color-accent: #22d3ee;
+  /* Cyan 400 */
+  --color-accent-content: #083344;
+
+  --color-neutral: #1e293b;
+  --color-neutral-content: #f8fafc;
+
+  --color-info: #60a5fa;
+  --color-success: #4ade80;
+  --color-warning: #fbbf24;
+  --color-error: #f87171;
+}
+
+/* Custom Utilities */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+[data-theme='dark'] .glass-effect {
+  background: rgba(15, 23, 42, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Slick Carousel Customization */
 .slick-prev:before,
 .slick-next:before {
-  color: #ff0000;      /* arrow color /
-  font-size: 30px;     / arrow size */
+  color: var(--color-primary);
+  font-size: 30px;
+  transition: color 0.3s ease;
+}
+
+.slick-prev:hover:before,
+.slick-next:hover:before {
+  color: var(--color-secondary);
+}
+
+.slick-dots li button:before {
+  color: var(--color-neutral);
+}
+
+.slick-dots li.slick-active button:before {
+  color: var(--color-primary);
 }

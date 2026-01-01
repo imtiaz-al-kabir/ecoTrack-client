@@ -17,7 +17,7 @@ const UpcomingEvents = () => {
 
   return (
     <div className="container mx-auto pb-10">
-      <h1 className="text-3xl font-bold text-center text-emerald-600  pb-5">
+      <h1 className="text-3xl font-bold text-center text-emerald-600  py-10">
         Upcoming Events
       </h1>
       {loading ? (

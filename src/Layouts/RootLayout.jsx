@@ -4,10 +4,9 @@ import Navbar from "../Components/Navbar";
 
 const RootLayout = () => {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen bg-base-100 text-base-content font-sans">
       <Navbar />
-      <div className="min-h-screen bg-green-50 pt-24">
-        {" "}
+      <div className="flex-grow pt-20">
         <Outlet />
       </div>
       <Footer />

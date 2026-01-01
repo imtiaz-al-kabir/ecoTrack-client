@@ -62,15 +62,21 @@ const UpdateProfile = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="min-h-screen flex justify-center items-center bg-[#f5f5f5]"
+      className="flex justify-center"
     >
-      <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center text-emerald-600 mb-6">
-          Update Profile
-        </h2>
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 w-full max-w-lg">
+        <div className="flex flex-col items-center mb-6">
+          <div className="avatar mb-4">
+            <div className="w-24 rounded-full ring ring-emerald-500 ring-offset-base-100 ring-offset-2">
+              <img src={photoURL || "https://i.pravatar.cc/150?img=2"} alt="Profile" />
+            </div>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-800">Edit Profile</h2>
+          <p className="text-gray-500 text-sm">Update your personal details</p>
+        </div>
 
         <form onSubmit={handleUpdate} className="space-y-5">
           {/* Name */}
@@ -130,11 +136,10 @@ const UpdateProfile = () => {
             whileTap={{ scale: 0.95 }}
             type="submit"
             disabled={loading}
-            className={`w-full py-2 rounded-lg font-semibold text-white ${
-              loading
+            className={`w-full py-2 rounded-lg font-semibold text-white ${loading
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-emerald-500 hover:bg-emerald-600"
-            }`}
+              }`}
           >
             {loading ? "Updating..." : "Update Profile"}
           </motion.button>

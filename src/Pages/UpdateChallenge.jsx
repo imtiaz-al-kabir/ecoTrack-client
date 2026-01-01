@@ -28,7 +28,7 @@ const UpdateChallenge = () => {
       }
     };
     fetchChallenge();
-  }, [id,axiosInstance]);
+  }, [id, axiosInstance]);
 
 
   const handleUpdate = async (e) => {
@@ -70,18 +70,23 @@ const UpdateChallenge = () => {
       <p className="text-center py-10 text-gray-600">Challenge not found.</p>
     );
 
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className="py-10 px-4 md:px-0"
-    >
-      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-2xl p-8">
-        <h2 className="text-3xl font-bold text-emerald-600 mb-6 text-center">
-          Update Challenge
-        </h2>
 
+  return (
+    <div className="w-full">
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-800">Update Challenge</h2>
+          <p className="text-gray-500 text-sm">Modify existing challenge details.</p>
+        </div>
+        <button onClick={() => navigate(-1)} className="btn btn-ghost btn-sm">Cancel</button>
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="max-w-4xl mx-auto bg-white shadow-sm border border-gray-100 rounded-2xl p-8"
+      >
         <form
           onSubmit={handleUpdate}
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
@@ -94,7 +99,7 @@ const UpdateChallenge = () => {
               name="title"
               defaultValue={challenge.title}
               required
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-emerald-400"
+              className="input input-bordered w-full focus:ring-2 focus:ring-emerald-400 focus:outline-none"
               placeholder="Enter challenge title"
             />
           </div>
@@ -107,7 +112,7 @@ const UpdateChallenge = () => {
               name="category"
               defaultValue={challenge.category}
               required
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-emerald-400"
+              className="input input-bordered w-full focus:ring-2 focus:ring-emerald-400 focus:outline-none"
               placeholder="Enter category"
             />
           </div>
@@ -120,7 +125,7 @@ const UpdateChallenge = () => {
               name="description"
               defaultValue={challenge.description}
               required
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-emerald-400"
+              className="textarea textarea-bordered w-full focus:ring-2 focus:ring-emerald-400 focus:outline-none text-base"
               rows="4"
               placeholder="Enter description"
             ></textarea>
@@ -135,7 +140,7 @@ const UpdateChallenge = () => {
               type="number"
               defaultValue={challenge.duration}
               required
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-emerald-400"
+              className="input input-bordered w-full focus:ring-2 focus:ring-emerald-400 focus:outline-none"
             />
           </div>
 
@@ -147,7 +152,7 @@ const UpdateChallenge = () => {
               name="target"
               defaultValue={challenge.target}
               required
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-emerald-400"
+              className="input input-bordered w-full focus:ring-2 focus:ring-emerald-400 focus:outline-none"
             />
           </div>
 
@@ -159,7 +164,7 @@ const UpdateChallenge = () => {
               name="impact"
               defaultValue={challenge.impact}
               required
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-emerald-400"
+              className="input input-bordered w-full focus:ring-2 focus:ring-emerald-400 focus:outline-none"
             />
           </div>
 
@@ -171,7 +176,7 @@ const UpdateChallenge = () => {
               name="photo"
               defaultValue={challenge.photo}
               required
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-emerald-400"
+              className="input input-bordered w-full focus:ring-2 focus:ring-emerald-400 focus:outline-none"
             />
           </div>
 
@@ -186,7 +191,7 @@ const UpdateChallenge = () => {
                 new Date(challenge.startDate).toISOString().split("T")[0]
               }
               required
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-emerald-400"
+              className="input input-bordered w-full focus:ring-2 focus:ring-emerald-400 focus:outline-none"
             />
           </div>
 
@@ -201,22 +206,23 @@ const UpdateChallenge = () => {
                 new Date(challenge.endDate).toISOString().split("T")[0]
               }
               required
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-emerald-400"
+              className="input input-bordered w-full focus:ring-2 focus:ring-emerald-400 focus:outline-none"
             />
           </div>
 
-          <div className="md:col-span-2 text-center pt-4">
+          <div className="md:col-span-2 flex justify-end gap-4 pt-4">
+            <button type="button" onClick={() => navigate(-1)} className="btn btn-ghost">Cancel</button>
             <motion.button
               whileTap={{ scale: 0.95 }}
               type="submit"
-              className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-3 rounded-lg shadow-md transition-colors"
+              className="btn btn-primary text-white px-8"
             >
               Update Challenge
             </motion.button>
           </div>
         </form>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 

@@ -2,14 +2,21 @@ import { motion } from "motion/react";
 import { use, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
+import { FaGoogle, FaEnvelope, FaLock, FaUser, FaImage } from "react-icons/fa6";
+import Swal from "sweetalert2";
 
 const Register = () => {
-  const { createUser, googleLogin } = use(AuthContext);
+  const { createUser, googleLogin, updateUserProfile } = use(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const handleRegisterForm = (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError("");
+
     const name = e.target.name.value;
     const email = e.target.email.value;
     const photo = e.target.photo.value;
@@ -19,162 +26,136 @@ const Register = () => {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
     if (!passRegex.test(password)) {
       setError(
-        "Password must have at least 1 uppercase, 1 lowercase,at least 1 special characters and at least 6 characters long."
+        "Password must have at least 1 uppercase, 1 lowercase, 1 special character and be 6+ chars long."
       );
+      setLoading(false);
       return;
     }
 
     createUser(email, password)
-      .then(() => navigate(location.state ? location.state : "/"))
-      .catch((err) => console.log(err.message));
+      .then(() => {
+        updateUserProfile({ displayName: name, photoURL: photo })
+          .then(() => {
+            navigate(location.state ? location.state : "/dashboard");
+            Swal.fire({
+              icon: 'success',
+              title: 'Welcome to EcoTrack!',
+              text: 'Registration successful.',
+              showConfirmButton: false,
+              timer: 1500
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+            setError("Failed to update profile. Please try again.");
+          });
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(err.message);
+      })
+      .finally(() => setLoading(false));
   };
 
   const handleGoogle = () => {
     googleLogin()
-      .then(() => navigate(location.state ? location.state : "/"))
+      .then(() => navigate(location.state ? location.state : "/dashboard"))
       .catch((err) => console.log(err));
   };
 
   return (
-    <div className="bg-[#f5f5f5] min-h-screen px-5 flex justify-center items-center">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="bg-white p-6 md:p-10 rounded-xl shadow-2xl w-full max-w-md"
-      >
-        <form
-          onSubmit={handleRegisterForm}
-          className="flex flex-col items-center justify-center space-y-4"
-        >
-          {/* Title */}
-          <motion.h2
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-4xl text-gray-900 font-medium text-center"
-          >
-            Join Eco<span className="text-emerald-400">Track</span>
-          </motion.h2>
+    <div className="min-h-screen flex items-center justify-center bg-base-200 p-4">
+      <div className="w-full max-w-5xl bg-base-100 rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row-reverse">
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="text-gray-500 text-sm text-center"
-          >
-            Already have an account?{" "}
-            <Link className="text-emerald-400 hover:underline" to="/login">
-              Sign in
-            </Link>
-          </motion.p>
-
-          {/* Name Input */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
-            className="flex items-center w-full border border-gray-300 rounded-full h-12 px-4 gap-2"
-          >
-            <input
-              name="name"
-              type="text"
-              className="outline-none w-full bg-transparent text-gray-600 placeholder-gray-400"
-              placeholder="Full Name"
-              required
-            />
-          </motion.div>
-
-          {/* Email Input */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5 }}
-            className="flex items-center w-full border border-gray-300 rounded-full h-12 px-4 gap-2"
-          >
-            <input
-              name="email"
-              type="email"
-              placeholder="Email id"
-              className="outline-none w-full bg-transparent text-gray-600 placeholder-gray-400"
-              required
-            />
-          </motion.div>
-
-          {/* Photo URL Input */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.6 }}
-            className="flex items-center w-full border border-gray-300 rounded-full h-12 px-4 gap-2"
-          >
-            <input
-              name="photo"
-              type="url"
-              placeholder="Photo URL"
-              className="outline-none w-full bg-transparent text-gray-600 placeholder-gray-400"
-              required
-            />
-          </motion.div>
-
-          {/* Password Input */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.7 }}
-            className="flex items-center w-full border border-gray-300 rounded-full h-12 px-4 gap-2"
-          >
-            <input
-              name="password"
-              type="password"
-              placeholder="Password"
-              className="outline-none w-full bg-transparent text-gray-600 placeholder-gray-400"
-              required
-            />
-          </motion.div>
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-          {/* Register Button */}
-          <motion.button
-            type="submit"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            className="w-full rounded-xl bg-linear-to-r from-emerald-400 to-teal-500 hover:from-emerald-500 hover:to-teal-600 text-white py-2 transition-all"
-          >
-            Sign up
-          </motion.button>
-        </form>
-
-        {/* Divider */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="flex items-center my-6 gap-4"
-        >
-          <div className="flex-1 h-px bg-gray-300" />
-          <p className="text-gray-400 text-sm text-center">
-            or sign up with Google
-          </p>
-          <div className="flex-1 h-px bg-gray-300" />
-        </motion.div>
-
-        {/* Google Sign-up */}
-        <motion.button
-          onClick={handleGoogle}
-          whileHover={{ scale: 1.03 }}
-          transition={{ type: "spring", stiffness: 300 }}
-          className="w-full flex items-center justify-center h-12 rounded-xl bg-gray-100 hover:bg-gray-200"
-        >
+        {/* Right Side - Visual */}
+        <div className="hidden md:flex md:w-1/2 bg-secondary relative items-center justify-center p-12 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-bl from-secondary to-primary opacity-90"></div>
           <img
-            src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/login/googleLogo.svg"
-            alt="Google Logo"
-            className="h-6"
+            src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&w=2670&auto=format&fit=crop"
+            alt="Nature"
+            className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-50"
           />
-          <span className="ml-2 text-gray-700 font-medium">
-            Sign up with Google
-          </span>
-        </motion.button>
-      </motion.div>
+          <div className="relative z-10 text-primary-content text-left space-y-6">
+            <h1 className="text-5xl font-bold">Join the Movement</h1>
+            <p className="text-lg opacity-90">Start your journey towards a sustainable lifestyle today. Every small step counts.</p>
+          </div>
+
+          {/* Decorative circles */}
+          <div className="absolute top-10 right-10 w-40 h-40 bg-white/20 rounded-full blur-2xl"></div>
+          <div className="absolute bottom-10 left-10 w-60 h-60 bg-white/20 rounded-full blur-3xl"></div>
+        </div>
+
+        {/* Left Side - Form */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="w-full md:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center"
+        >
+          <div className="text-center md:text-left mb-6">
+            <h2 className="text-3xl font-bold text-base-content mb-2">Create Account</h2>
+            <p className="text-base-content/60">Join our community of eco-warriors</p>
+          </div>
+
+          <form onSubmit={handleRegisterForm} className="space-y-4">
+
+            <div className="form-control">
+              <label className="label"><span className="label-text font-medium">Full Name</span></label>
+              <div className="relative">
+                <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input name="name" type="text" placeholder="John Doe" className="input input-bordered w-full pl-12 rounded-xl focus:input-primary bg-base-200/50" required />
+              </div>
+            </div>
+
+            <div className="form-control">
+              <label className="label"><span className="label-text font-medium">Email</span></label>
+              <div className="relative">
+                <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input name="email" type="email" placeholder="name@example.com" className="input input-bordered w-full pl-12 rounded-xl focus:input-primary bg-base-200/50" required />
+              </div>
+            </div>
+
+            <div className="form-control">
+              <label className="label"><span className="label-text font-medium">Photo URL</span></label>
+              <div className="relative">
+                <FaImage className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input name="photo" type="url" placeholder="https://example.com/photo.jpg" className="input input-bordered w-full pl-12 rounded-xl focus:input-primary bg-base-200/50" required />
+              </div>
+            </div>
+
+            <div className="form-control">
+              <label className="label"><span className="label-text font-medium">Password</span></label>
+              <div className="relative">
+                <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input name="password" type="password" placeholder="Create a password" className="input input-bordered w-full pl-12 rounded-xl focus:input-primary bg-base-200/50" required />
+              </div>
+            </div>
+
+            {error && <div className="alert alert-error text-sm py-2 rounded-lg"><span>{error}</span></div>}
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn btn-primary w-full rounded-xl text-white text-lg shadow-lg shadow-primary/30 mt-4"
+            >
+              {loading ? <span className="loading loading-spinner"></span> : "Sign Up"}
+            </button>
+          </form>
+
+          <div className="divider my-6">OR</div>
+
+          <button
+            onClick={handleGoogle}
+            className="btn btn-outline w-full rounded-xl hover:bg-base-200 border-base-300"
+          >
+            <FaGoogle className="text-red-500" /> Sign up with Google
+          </button>
+
+          <p className="text-center mt-6 text-base-content/60">
+            Already have an account?{' '}
+            <Link to="/login" className="text-primary font-bold hover:underline">Log in</Link>
+          </p>
+        </motion.div>
+      </div>
     </div>
   );
 };

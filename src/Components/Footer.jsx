@@ -81,8 +81,8 @@ const Footer = () => {
               </h2>
             </div>
             <p className="text-gray-400 leading-relaxed text-sm">
-              Empowering individuals to make sustainable choices. Track your impact,
-              join challenges, and build a greener future together.
+              Empowering individuals to make sustainable choices. Track your
+              impact, join challenges, and build a greener future together.
             </p>
             {/* Social Icons */}
             <div className="flex items-center gap-3 pt-2">
@@ -98,7 +98,10 @@ const Footer = () => {
                   aria-label={label}
                   className="p-2.5 bg-gray-800/50 hover:bg-emerald-500 hover:text-white rounded-full transition-all duration-300 border border-gray-700 hover:border-emerald-400 group"
                 >
-                  <Icon size={16} className="group-hover:scale-110 transition-transform" />
+                  <Icon
+                    size={16}
+                    className="group-hover:scale-110 transition-transform"
+                  />
                 </a>
               ))}
             </div>
@@ -111,17 +114,29 @@ const Footer = () => {
               <span className="absolute -bottom-2 left-0 w-8 h-1 bg-emerald-500 rounded-full"></span>
             </h3>
             <ul className="space-y-3 text-sm">
-              {["Home", "Challenges", "Tips", "Events", "About Us"].map((item) => (
-                <li key={item}>
-                  <Link
-                    to="/"
-                    className="hover:text-emerald-400 transition-colors duration-200 flex items-center gap-2 group"
-                  >
-                    <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                    {item}
-                  </Link>
-                </li>
-              ))}
+              {["Home", "Challenges", "Tips", "Events", "About Us"].map(
+                (item) => (
+                  <li key={item}>
+                    <Link
+                      to={
+                        item === "About Us"
+                          ? "/about"
+                          : item === "Challenges"
+                          ? "/challenges"
+                          : item === "Tips"
+                          ? "/tips"
+                          : item === "Events"
+                          ? "/events"
+                          : "/"
+                      }
+                      className="hover:text-emerald-400 transition-colors duration-200 flex items-center gap-2 group"
+                    >
+                      <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                      {item}
+                    </Link>
+                  </li>
+                )
+              )}
             </ul>
           </div>
 
@@ -132,10 +147,15 @@ const Footer = () => {
               <span className="absolute -bottom-2 left-0 w-8 h-1 bg-emerald-500 rounded-full"></span>
             </h3>
             <ul className="space-y-3 text-sm">
-              {["Help Center", "Community Guidelines", "Contact Support", "Feedback"].map((item) => (
+              {[
+                "Help Center",
+                "Community Guidelines",
+                "Contact Support",
+                "Feedback",
+              ].map((item) => (
                 <li key={item}>
                   <Link
-                    to="#"
+                    to={item === "Contact Support" ? "/contact" : "#"}
                     className="hover:text-emerald-400 transition-colors duration-200"
                   >
                     {item}
@@ -152,10 +172,18 @@ const Footer = () => {
               <span className="absolute -bottom-2 left-0 w-8 h-1 bg-emerald-500 rounded-full"></span>
             </h3>
             <ul className="space-y-3 text-sm mb-8">
-              {["Privacy Policy", "Terms of Service", "Accessibility Statement"].map((item) => (
+              {[
+                "Privacy Policy",
+                "Terms of Service",
+                "Accessibility Statement",
+              ].map((item) => (
                 <li key={item}>
                   <Link
-                    to="#"
+                    to={
+                      item === "Privacy Policy" || item === "Terms of Service"
+                        ? "/privacy"
+                        : "#"
+                    }
                     className="hover:text-emerald-400 transition-colors duration-200"
                   >
                     {item}
@@ -173,7 +201,7 @@ const Footer = () => {
         <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
           <p>© 2025 EcoTrack. All rights reserved.</p>
           <div className="flex gap-6">
-            <span>Made with 💚 by EcoTrack Team</span>
+            <span>Made with 💚 by IMTIAZ AL KABIR</span>
           </div>
         </div>
       </div>

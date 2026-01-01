@@ -1,11 +1,19 @@
 import { motion } from "motion/react";
 import { useContext, useEffect, useState } from "react";
+import {
+  FaArrowLeft,
+  FaCalendar,
+  FaClock,
+  FaMedal,
+  FaUsers,
+} from "react-icons/fa6";
 import { useLocation, useNavigate, useParams } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Context/AuthContext";
 import useAxiosInstance from "../Hook/useAxiosInstance";
 import useAxiosSecure from "../Hook/useAxiosSecure";
 import Loading from "./Loading";
+import { FaShareAlt } from "react-icons/fa";
 
 const ChallengeCardDetails = () => {
   const { id } = useParams();
@@ -17,7 +25,9 @@ const ChallengeCardDetails = () => {
   const [challenge, setChallenge] = useState(null);
   const [joined, setJoined] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("overview");
   const location = useLocation();
+
   const showToast = (icon, title) => {
     Swal.fire({
       toast: true,
@@ -37,7 +47,6 @@ const ChallengeCardDetails = () => {
     return challengeId?.toString();
   };
 
-  // 🔹 Fetch challenge
   const fetchChallenge = async () => {
     try {
       const { data } = await axiosInstance.get(`/challenges/${id}`);
@@ -50,7 +59,6 @@ const ChallengeCardDetails = () => {
     }
   };
 
-  // 🔹 Check if joined
   const checkJoined = async () => {
     if (!user?.email) return;
     try {
@@ -73,7 +81,6 @@ const ChallengeCardDetails = () => {
     checkJoined();
   }, [user, id]);
 
-  // 🔹 Handle Join
   const handleJoin = async () => {
     if (!user?.email) {
       Swal.fire({
@@ -133,7 +140,7 @@ const ChallengeCardDetails = () => {
   };
 
   const handleUpdate = () => {
-    navigate(`/update-challenge/${id}`);
+    navigate(`/dashboard/update-challenge/${id}`);
   };
 
   if (loading || !challenge) return <Loading />;
@@ -141,104 +148,201 @@ const ChallengeCardDetails = () => {
   const isCreator = user?.email === challenge.createdBy;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className="py-10"
-    >
-      <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-        <div className="flex flex-col md:flex-row">
-          <motion.img
+    <div className="min-h-screen bg-base-100 pb-20">
+      {/* Detail Header / Hero */}
+      <div className="relative h-[400px] w-full">
+        <div className="absolute inset-0">
+          <img
             src={challenge.photo}
             alt={challenge.title}
-            className="w-full md:w-1/2 object-cover"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.3 }}
+            className="w-full h-full object-cover"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-base-100 via-base-100/50 to-transparent"></div>
+        </div>
 
-          <div className="p-6 flex-1 space-y-4">
-            <div>
-              <h2 className="text-3xl font-bold text-emerald-600">
-                {challenge.title}
-              </h2>
-              <p className="text-lg text-emerald-500 font-medium">
-                {challenge.category}
-              </p>
+        <div className="absolute top-6 left-6 z-10">
+          <button
+            onClick={() => navigate(-1)}
+            className="btn btn-circle btn-ghost bg-base-100/50 hover:bg-base-100 backdrop-blur-md border border-white/20"
+          >
+            <FaArrowLeft size={18} />
+          </button>
+        </div>
+
+        <div className="absolute bottom-0 left-0 w-full p-6 md:p-12">
+          <div className="max-w-5xl mx-auto">
+            <div className="badge badge-primary font-bold mb-4">
+              {challenge.category}
             </div>
-
-            <p className="text-gray-700 leading-relaxed">
-              {challenge.description}
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-gray-700">
-              <p>
-                <span className="font-semibold">Duration:</span>{" "}
-                {challenge.duration} days
-              </p>
-              <p>
-                <span className="font-semibold">Target:</span>{" "}
-                {challenge.target}
-              </p>
-              <p>
-                <span className="font-semibold">Participants:</span>{" "}
-                {challenge.participants || 0}
-              </p>
-              <p>
-                <span className="font-semibold">Impact Metric:</span>{" "}
-                {challenge.impact}
-              </p>
-              <p>
-                <span className="font-semibold">Start Date:</span>{" "}
-                {new Date(challenge.startDate).toLocaleDateString()}
-              </p>
-              <p>
-                <span className="font-semibold">End Date:</span>{" "}
-                {new Date(challenge.endDate).toLocaleDateString()}
-              </p>
-              <p>
-                <span className="font-semibold">Created By:</span>{" "}
-                {challenge.createdBy}
-              </p>
-            </div>
-
-            <div className="pt-6 flex flex-wrap gap-3">
-              <motion.button
-                onClick={handleJoin}
-                disabled={joined}
-                whileTap={{ scale: joined ? 1 : 0.95 }}
-                className={`rounded-lg text-white text-sm font-medium px-6 py-2 transition-colors ${
-                  joined
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-emerald-500 hover:bg-emerald-600"
-                }`}
-              >
-                {joined ? "Joined" : "Join Challenge"}
-              </motion.button>
-
-              {isCreator && (
-                <>
-                  <motion.button
-                    onClick={handleUpdate}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium px-6 py-2 rounded-lg transition-colors"
-                  >
-                    Update
-                  </motion.button>
-                  <motion.button
-                    onClick={handleDelete}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-red-500 hover:bg-red-600 text-white text-sm font-medium px-6 py-2 rounded-lg transition-colors"
-                  >
-                    Delete
-                  </motion.button>
-                </>
-              )}
+            <h1 className="text-4xl md:text-5xl font-bold mb-2">
+              {challenge.title}
+            </h1>
+            <div className="flex flex-wrap gap-6 text-sm md:text-base opacity-90 font-medium">
+              <span className="flex items-center gap-2">
+                <FaClock className="text-primary" /> {challenge.duration} Days
+              </span>
+              <span className="flex items-center gap-2">
+                <FaUsers className="text-secondary" /> {challenge.participants}{" "}
+                Participants
+              </span>
+              <span className="flex items-center gap-2">
+                <FaMedal className="text-warning" /> {challenge.impact}
+              </span>
             </div>
           </div>
         </div>
       </div>
-    </motion.div>
+
+      {/* Content Tabs */}
+      <div className="max-w-5xl mx-auto px-6 mt-8">
+        <div className="flex flex-col md:flex-row gap-8">
+          {/* Main Content */}
+          <div className="flex-1">
+            {/* Tabs Navigation */}
+            <div className="tabs tabs-lifted mb-6">
+              {["Overview", "Key Info", "Reviews"].map((tab) => (
+                <a
+                  key={tab}
+                  className={`tab tab-lg font-bold ${
+                    activeTab === tab.toLowerCase().replace(" ", "")
+                      ? "tab-active text-primary"
+                      : ""
+                  }`}
+                  onClick={() =>
+                    setActiveTab(tab.toLowerCase().replace(" ", ""))
+                  }
+                >
+                  {tab}
+                </a>
+              ))}
+            </div>
+
+            {/* Tab Content */}
+            <div className="bg-base-200/50 p-6 rounded-2xl min-h-[300px]">
+              {activeTab === "overview" && (
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                  <h3 className="text-2xl font-bold mb-4">
+                    About this Challenge
+                  </h3>
+                  <p className="text-lg leading-relaxed text-base-content/80 whitespace-pre-wrap">
+                    {challenge.description}
+                  </p>
+
+                  <div className="mt-8 p-4 bg-primary/10 border-l-4 border-primary rounded-r-lg">
+                    <h4 className="font-bold text-primary mb-2">Target Goal</h4>
+                    <p>{challenge.target}</p>
+                  </div>
+                </motion.div>
+              )}
+
+              {activeTab === "keyinfo" && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                >
+                  <div className="stat bg-base-100 rounded-xl shadow-sm">
+                    <div className="stat-figure text-primary">
+                      <FaCalendar size={24} />
+                    </div>
+                    <div className="stat-title">Start Date</div>
+                    <div className="stat-value text-lg">
+                      {new Date(challenge.startDate).toLocaleDateString()}
+                    </div>
+                  </div>
+                  <div className="stat bg-base-100 rounded-xl shadow-sm">
+                    <div className="stat-figure text-primary">
+                      <FaCalendar size={24} />
+                    </div>
+                    <div className="stat-title">End Date</div>
+                    <div className="stat-value text-lg">
+                      {new Date(challenge.endDate).toLocaleDateString()}
+                    </div>
+                  </div>
+                  <div className="stat bg-base-100 rounded-xl shadow-sm col-span-full">
+                    <div className="stat-title">Created By</div>
+                    <div className="stat-value text-lg text-secondary truncate">
+                      {challenge.createdBy}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {activeTab === "reviews" && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-center py-10"
+                >
+                  <span className="text-6xl">💬</span>
+                  <h3 className="text-xl font-bold mt-4">Community Reviews</h3>
+                  <p className="opacity-60">
+                    Join the challenge to leave a review!
+                  </p>
+                </motion.div>
+              )}
+            </div>
+          </div>
+
+          {/* Sidebar Actions */}
+          <div className="w-full md:w-80 space-y-6">
+            <div className="card bg-base-100 shadow-xl border border-base-200">
+              <div className="card-body">
+                <h3 className="card-title text-xl">Join the Action</h3>
+                <p className="text-sm opacity-70 mb-4">
+                  Commit to this challenge and track your progress!
+                </p>
+
+                <button
+                  onClick={handleJoin}
+                  disabled={joined}
+                  className={`btn btn-lg w-full ${
+                    joined
+                      ? "btn-disabled"
+                      : "btn-primary text-white shadow-lg shadow-primary/30"
+                  }`}
+                >
+                  {joined ? "Joined ✓" : "Join Now"}
+                </button>
+
+                {isCreator && <div className="divider text-xs">Manage</div>}
+
+                {isCreator && (
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      onClick={handleUpdate}
+                      className="btn btn-outline btn-info btn-sm"
+                    >
+                      Update
+                    </button>
+                    <button
+                      onClick={handleDelete}
+                      className="btn btn-outline btn-error btn-sm"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="card bg-base-100 shadow-xl border border-base-200">
+              <div className="card-body">
+                <h3 className="card-title text-base">Share</h3>
+                <div className="flex gap-2">
+                  <button className="btn btn-circle btn-sm btn-ghost bg-base-200 hover:bg-blue-500 hover:text-white">
+                    <FaUsers />
+                  </button>
+                  <button className="btn btn-circle btn-sm btn-ghost bg-base-200 hover:bg-sky-400 hover:text-white">
+                    <FaShareAlt />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
