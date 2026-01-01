@@ -87,14 +87,16 @@ const Footer = () => {
             {/* Social Icons */}
             <div className="flex items-center gap-3 pt-2">
               {[
-                { Icon: FaFacebookF, label: "Facebook" },
-                { Icon: FaInstagram, label: "Instagram" },
-                { Icon: FaXTwitter, label: "X (Twitter)" },
-                { Icon: FaLinkedinIn, label: "LinkedIn" },
-              ].map(({ Icon, label }, idx) => (
+                { Icon: FaFacebookF, label: "Facebook", href: "https://facebook.com" },
+                { Icon: FaInstagram, label: "Instagram", href: "https://instagram.com" },
+                { Icon: FaXTwitter, label: "X (Twitter)", href: "https://twitter.com" },
+                { Icon: FaLinkedinIn, label: "LinkedIn", href: "https://linkedin.com" },
+              ].map(({ Icon, label, href }, idx) => (
                 <a
                   key={idx}
-                  href="#"
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={label}
                   className="p-2.5 bg-gray-800/50 hover:bg-emerald-500 hover:text-white rounded-full transition-all duration-300 border border-gray-700 hover:border-emerald-400 group"
                 >
@@ -122,12 +124,12 @@ const Footer = () => {
                         item === "About Us"
                           ? "/about"
                           : item === "Challenges"
-                          ? "/challenges"
-                          : item === "Tips"
-                          ? "/tips"
-                          : item === "Events"
-                          ? "/events"
-                          : "/"
+                            ? "/challenges"
+                            : item === "Tips"
+                              ? "/tips"
+                              : item === "Events"
+                                ? "/events"
+                                : "/"
                       }
                       className="hover:text-emerald-400 transition-colors duration-200 flex items-center gap-2 group"
                     >
@@ -140,28 +142,29 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* 3. Support */}
+          {/* 3. Contact Info */}
           <div className="lg:col-span-1">
             <h3 className="text-white font-semibold text-lg mb-6 relative inline-block">
-              Support
+              Contact Us
               <span className="absolute -bottom-2 left-0 w-8 h-1 bg-emerald-500 rounded-full"></span>
             </h3>
-            <ul className="space-y-3 text-sm">
-              {[
-                "Help Center",
-                "Community Guidelines",
-                "Contact Support",
-                "Feedback",
-              ].map((item) => (
-                <li key={item}>
-                  <Link
-                    to={item === "Contact Support" ? "/contact" : "#"}
-                    className="hover:text-emerald-400 transition-colors duration-200"
-                  >
-                    {item}
-                  </Link>
-                </li>
-              ))}
+            <ul className="space-y-4 text-sm">
+              <li className="flex items-start gap-3">
+                <span className="text-emerald-500 mt-1">📍</span>
+                <span>123 Eco Street, Green City, Earth 10101</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="text-emerald-500">📧</span>
+                <a href="mailto:support@ecotrack.com" className="hover:text-emerald-400 transition-colors">
+                  support@ecotrack.com
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="text-emerald-500">📞</span>
+                <a href="tel:+15551234567" className="hover:text-emerald-400 transition-colors">
+                  +1 (555) 123-4567
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -173,20 +176,16 @@ const Footer = () => {
             </h3>
             <ul className="space-y-3 text-sm mb-8">
               {[
-                "Privacy Policy",
-                "Terms of Service",
-                "Accessibility Statement",
+                { name: "Privacy Policy", path: "/privacy" },
+                { name: "Terms of Service", path: "/terms" },
+                { name: "Accessibility Statement", path: "/accessibility" },
               ].map((item) => (
-                <li key={item}>
+                <li key={item.name}>
                   <Link
-                    to={
-                      item === "Privacy Policy" || item === "Terms of Service"
-                        ? "/privacy"
-                        : "#"
-                    }
+                    to={item.path}
                     className="hover:text-emerald-400 transition-colors duration-200"
                   >
-                    {item}
+                    {item.name}
                   </Link>
                 </li>
               ))}

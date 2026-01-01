@@ -21,6 +21,8 @@ import PrivateRoute from "./PrivateRoute";
 import About from "../Pages/About";
 import Contact from "../Pages/Contact";
 import Privacy from "../Pages/Privacy";
+import TermsOfService from "../Pages/TermsOfService";
+import AccessibilityStatement from "../Pages/AccessibilityStatement";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +41,8 @@ const router = createBrowserRouter([
       { path: "/about", Component: About },
       { path: "/contact", Component: Contact },
       { path: "/privacy", Component: Privacy },
+      { path: "/terms", Component: TermsOfService },
+      { path: "/accessibility", Component: AccessibilityStatement },
     ],
   },
   {
