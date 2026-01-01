@@ -78,7 +78,7 @@ const Login = () => {
         <div className="hidden md:flex md:w-1/2 bg-primary relative items-center justify-center p-12 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-primary to-secondary opacity-90"></div>
           <img
-            src="https://images.unsplash.com/photo-1542601906990-24ccd08d7455?q=80&w=2628&auto=format&fit=crop"
+            src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=2670&auto=format&fit=crop"
             alt="Nature"
             className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-50"
           />

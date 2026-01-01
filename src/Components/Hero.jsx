@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Slider from "react-slick";
 import { FaArrowRightLong, FaChevronLeft, FaChevronRight, FaArrowDown } from "react-icons/fa6";
 import { Link } from "react-router";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import useAxiosInstance from "../Hook/useAxiosInstance";
+import { AuthContext } from "../Context/AuthContext";
 
 const NextArrow = ({ onClick }) => (
   <div
@@ -29,6 +30,7 @@ const PrevArrow = ({ onClick }) => (
 );
 
 const Hero = () => {
+  const { user } = use(AuthContext);
   const axiosInstance = useAxiosInstance();
   const [challenges, setChallenges] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -112,12 +114,12 @@ const Hero = () => {
                     >
                       Explore Challenges <FaArrowRightLong className="ml-2" />
                     </Link>
-                    {/* Secondary CTA added as per requirements */}
+                    {/* Secondary CTA - disabled when logged in */}
                     <Link
-                      to="/register"
-                      className="btn btn-outline text-white hover:bg-white hover:text-black btn-lg hover:scale-105 transition-transform backdrop-blur-sm"
+                      to={user ? "#" : "/register"}
+                      className={`btn btn-outline text-white hover:bg-white hover:text-black btn-lg hover:scale-105 transition-transform backdrop-blur-sm ${user ? "btn-disabled opacity-50 cursor-not-allowed" : ""}`}
                     >
-                      Join Now
+                      {user ? "Already Joined" : "Join Now"}
                     </Link>
                   </div>
                 </div>
