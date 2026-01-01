@@ -2,6 +2,8 @@
 
 EcoTrack is a full-stack sustainable living application designed to help users track their eco-friendly activities, participate in green challenges, and discover local sustainability events. This project encourages users to adopt a more eco-conscious lifestyle through gamified tracking and community engagement.
 
+🔗 **Live Demo:** [https://ecotrack-client.web.app](https://ecotrack-client.web.app)
+
 ---
 
 ## 🚀 Features
