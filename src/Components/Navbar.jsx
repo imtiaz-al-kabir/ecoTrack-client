@@ -13,12 +13,12 @@ const Navbar = () => {
     { name: "Tips", path: "/tips" },
     ...(user
       ? [
-          { name: "Add New Challenge", path: "/challenges/add" },
+        { name: "Add New Challenge", path: "/challenges/add" },
 
-          { name: "User Challenges", path: "/user-challenge" },
+        { name: "User Challenges", path: "/user-challenge" },
 
-          { name: "My Activities", path: "/my-activities" },
-        ]
+        { name: "My Activities", path: "/my-activities" },
+      ]
       : []),
   ];
 
@@ -30,8 +30,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className=" bg-white w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-100 z-50 py-6 shadow
-     "
+      className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-300 py-4 shadow-sm border-b border-white/20"
     >
       {/* Logo */}
 
@@ -115,8 +114,7 @@ const Navbar = () => {
             to={link.path}
             end={link.path === "/challenges"}
             className={({ isActive }) =>
-              `text-lg font-medium hover:border-b-2 border-emerald-400 transition-all duration-500 ${
-                isActive ? " text-emerald-400" : "  "
+              `text-lg font-medium hover:text-emerald-500 hover:border-b-2 border-emerald-400 transition-all duration-300 ${isActive ? "text-emerald-500 border-b-2" : "text-gray-600"
               }`
             }
           >
@@ -192,9 +190,8 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed top-0 left-0 w-full h-screen bg-white text-base flex flex-col md:hidden items-center justify-center gap-6 font-medium text-gray-800 transition-all duration-500 z-40 ${
-          isMenuOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`fixed top-0 left-0 w-full h-screen bg-white/95 backdrop-blur-lg text-base flex flex-col md:hidden items-center justify-center gap-8 font-medium text-gray-800 transition-all duration-500 z-[60] ${isMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         <button
           className="absolute top-4 right-4"
@@ -215,8 +212,7 @@ const Navbar = () => {
         {navLinks.map((link, i) => (
           <NavLink
             className={({ isActive }) =>
-              `text-xl font-medium hover:border-b-2 border-emerald-400 transition-all duration-500 ${
-                isActive ? "border-b-2 border-emerald-400" : "  "
+              `text-xl font-medium hover:border-b-2 border-emerald-400 transition-all duration-500 ${isActive ? "border-b-2 border-emerald-400" : "  "
               }`
             }
             key={i}
@@ -243,7 +239,7 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content space-y-2 bg-base-100 rounded-box left-1/2 -translate-x-1/2 z-1 mt-2   w-52 p-2 shadow"
             >
               <li className="text-center font-semibold">{user.displayName}</li>
-            <li>
+              <li>
                 <Link className="py-2" to="/update-profile">Profile</Link>
               </li>
               <li>
@@ -259,14 +255,14 @@ const Navbar = () => {
         ) : (
           <div className="space-x-5 ">
             <Link
-             onClick={() => setIsMenuOpen(false)}
+              onClick={() => setIsMenuOpen(false)}
               to="/login"
               className="btn btn-outline btn-accent  px-8 py-2.5  transition-all duration-500"
             >
               Login
             </Link>
             <Link
-             onClick={() => setIsMenuOpen(false)}
+              onClick={() => setIsMenuOpen(false)}
               to="/register"
               className="bg-linear-to-r from-emerald-400 to-teal-500 hover:from-emerald-500 hover:to-teal-600 text-white px-8 py-2.5 transition-all btn duration-500"
             >

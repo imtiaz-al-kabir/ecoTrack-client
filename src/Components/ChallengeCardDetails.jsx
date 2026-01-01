@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Context/AuthContext";
 import useAxiosInstance from "../Hook/useAxiosInstance";
@@ -17,7 +17,7 @@ const ChallengeCardDetails = () => {
   const [challenge, setChallenge] = useState(null);
   const [joined, setJoined] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  const location = useLocation();
   const showToast = (icon, title) => {
     Swal.fire({
       toast: true,
@@ -81,6 +81,7 @@ const ChallengeCardDetails = () => {
         title: "Login Required",
         text: "You must log in first to join this challenge!",
       });
+      navigate("/login", { state: { from: location.pathname } });
       return;
     }
 

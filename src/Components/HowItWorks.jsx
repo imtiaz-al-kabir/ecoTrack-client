@@ -22,8 +22,8 @@ const HowItWorks = () => {
 
   return (
     <section className="py-16 bg-linear-to-b from-white to-green-50 text-center">
-      <h2 className="text-3xl font-bold text-gray-800 ">How It Works</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      <h2 className="text-3xl font-bold text-gray-800 mb-10">How It Works</h2>
+      <div className="grid grid-cols-1  md:grid-cols-3 gap-8 max-w-5xl mx-auto">
         {steps.map((step, index) => (
           <motion.div
             key={index}
