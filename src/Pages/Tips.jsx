@@ -57,7 +57,7 @@ const Tips = () => {
               placeholder="Search tips or categories..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="input input-lg w-full rounded-full pl-6 pr-12 text-gray-800 shadow-xl focus:ring-4 focus:ring-teal-500/30 border-none"
+              className="input input-lg w-full rounded-full pl-6 pr-12 text-base-content shadow-xl focus:ring-4 focus:ring-teal-500/30 border-none"
             />
             <button className="absolute right-3 top-1/2 -translate-y-1/2 btn btn-circle btn-accent btn-sm text-white">
               <svg

@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { use, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
+import useAxiosInstance from "../Hook/useAxiosInstance";
 import { FaGoogle, FaEnvelope, FaLock, FaUser, FaImage } from "react-icons/fa6";
 import Swal from "sweetalert2";
 
@@ -9,6 +10,7 @@ const Register = () => {
   const { createUser, googleLogin, updateUserProfile } = use(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const axiosPublic = useAxiosInstance();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -36,30 +38,71 @@ const Register = () => {
       .then(() => {
         updateUserProfile({ displayName: name, photoURL: photo })
           .then(() => {
-            navigate(location.state ? location.state : "/dashboard");
-            Swal.fire({
-              icon: 'success',
-              title: 'Welcome to EcoTrack!',
-              text: 'Registration successful.',
-              showConfirmButton: false,
-              timer: 1500
-            });
+            const userInfo = {
+              name: name,
+              email: email,
+              photoURL: photo,
+              role: "learner",
+            };
+            axiosPublic.post("/users", userInfo)
+              .then((res) => {
+                if (res.data.insertedId) {
+                  Swal.fire({
+                    icon: "success",
+                    title: "Welcome to EcoTrack!",
+                    text: "Registration successful.",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
+                } else {
+                  // User might already exist in DB or other success case
+                  Swal.fire({
+                    icon: "success",
+                    title: "Welcome back!",
+                    text: res.data.message || "Registration successful.",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
+                }
+                navigate(location.state ? location.state : "/dashboard");
+              })
+              .catch((err) => {
+                console.error("Database save failed", err);
+                // Even if DB save fails, let the user in because Auth succeeded
+                navigate(location.state ? location.state : "/dashboard");
+                Swal.fire({
+                  icon: "warning",
+                  title: "Account Created",
+                  text: "Welcome! Could not sync profile data, but you are logged in.",
+                  showConfirmButton: true,
+                });
+              });
           })
           .catch((err) => {
             console.error(err);
             setError("Failed to update profile. Please try again.");
+            setLoading(false);
           });
       })
       .catch((err) => {
         console.error(err);
         setError(err.message);
-      })
-      .finally(() => setLoading(false));
+        setLoading(false);
+      });
   };
 
   const handleGoogle = () => {
     googleLogin()
-      .then(() => navigate(location.state ? location.state : "/dashboard"))
+      .then((result) => {
+        const userInfo = {
+          email: result.user?.email,
+          name: result.user?.displayName,
+          role: "learner",
+        };
+        axiosPublic.post("/users", userInfo).then(() => {
+          navigate(location.state ? location.state : "/dashboard");
+        });
+      })
       .catch((err) => console.log(err));
   };
 

@@ -37,7 +37,7 @@ const ActiveChallenges = () => {
         >
           <Link
             to="/challenges"
-            className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 rounded-lg text-white font-semibold px-4 py-2"
+            className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 rounded-lg text-white font-semibold px-4 py-2 mb-10"
           >
             View All Challenges
             <FaArrowRightLong className="ml-1" />

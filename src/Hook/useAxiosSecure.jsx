@@ -4,6 +4,7 @@ import { AuthContext } from "../Context/AuthContext";
 
 const axiosSecure = axios.create({
   baseURL: "https://eco-track-server-lyart.vercel.app",
+  // baseURL: "http://localhost:3000",
 });
 
 const useAxiosSecure = () => {
